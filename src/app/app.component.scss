@@ -1,0 +1,13 @@
+#sidebar {
+  background: #F2F2F2;
+  li {
+    border-top:1px solid rgb(229, 229, 229);
+  }
+  li:last-child {  
+    border-bottom:1px solid rgb(229, 229, 229);
+  }
+  a:hover {
+    background: #fff;
+  }
+}
+

@@ -1,0 +1,33 @@
+<div id='button' class='page-content'>
+  <h3>
+    Button <small>按钮 ace-btn</small>
+  </h3>
+  <h5 class="text-warning">
+    颜色
+  </h5>
+  <ace-btn [type]='"default"' [text]='"default"'></ace-btn>
+  <ace-btn [type]='"warning"' [text]='"warning"'></ace-btn>
+  <ace-btn [type]='"info"' [text]='"info"'></ace-btn>
+  <ace-btn [type]='"danger"' [text]='"danger"'></ace-btn>
+  <ace-btn [type]='"primary"' [text]='"primary"'></ace-btn>
+  <ace-btn [type]='"link"' [text]='"link"'></ace-btn>
+  <h5 class="text-warning">
+    尺寸
+  </h5>
+  <button class='btn btn-danger btn-sm'>small</button>
+  <button class='btn btn-danger btn-md'>default</button>
+  <button class='btn btn-danger btn-lg'>large</button>
+  <h5 class="text-warning">
+    属性
+  </h5>
+  <table class='table-striped table-bordered table'>
+    <tr>
+      <th *ngFor='let th of thead'>{{th}}</th>
+    </tr>
+    <tr *ngFor='let item of tableValue'>
+      <td *ngFor='let key of getKeys(item)'>
+        <p>{{key}}</p>
+      </td>
+    </tr>
+  </table>
+</div>
