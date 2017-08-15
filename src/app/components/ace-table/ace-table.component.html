@@ -14,11 +14,9 @@
       <div class='ace-table-thead' > 
         <table class='table table-bordered'>
           <tr>
-            <th><span>tr5</span></th>
-            <th><span>tr5</span></th>
-            <th><span>tr5</span></th>
-            <th><span>tr5</span></th>
-            <th><span>tr5</span></th>
+            <th *ngFor='let item of theadSource'>
+              <span>{{item.text}}</span>
+            </th>
           </tr>
         </table>
       </div>
@@ -26,79 +24,10 @@
       <div class='ace-table-list'>
         <table class='table table-bordered'>
           <tr class='first-row'> <!-- 这个元素控制宽度，所有tr的宽度  -->
-            <td></td>          
-            <td></td>
-            <td></td>
-            <td></td>          
-            <td></td>          
+            <td *ngFor='let item of theadSource'></td>       
           </tr>
-          <tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr>
-          <tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-          </tr><tr>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
-            <td>td1</td>
+          <tr *ngFor='let data of dataSource'>
+            <td *ngFor='let i of getKeys(data)'>{{i}}</td>
           </tr>
         </table>
       </div>

@@ -19,6 +19,9 @@ export class AceTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if(!this.theadSource){
+      throw new Error('theadSource is undefined.theadSource is required.')
+    }
   }
   
   // 收起表单
@@ -38,5 +41,13 @@ export class AceTableComponent implements OnInit {
     }else{
       return {transform:"rotate(0)"};
     }
+  }
+  
+  getKeys(data:any){
+    var arr=[];
+    this.theadSource.forEach(function(val:any,idx:number){
+      arr.push(data[val.name]);
+    });
+    return arr;
   }
 }
