@@ -10,7 +10,7 @@ export class ButtonComponent implements OnInit {
   @Input() type:string = 'default';
   @Input() htmlType:string = 'button';
   @Input() icon:string;
-  @Input() size:string='btn-md';
+  @Input() size:string='default';
   @Input() text:string|undefined;
   @Output() onClick= new EventEmitter();
   constructor() { }
@@ -48,13 +48,13 @@ export class ButtonComponent implements OnInit {
       case 'default':;
       case '':val = 'btn-md';break;
       default:
-      console.log('ace-btn size is wrong,get'+str);
+      console.log('ace-btn size is wrong,get '+str);
       val = 'btn-md'
     };
     return val;
   }
 
   isClicked(){
-    console.log(this.onClick);
+    this.onClick.emit()
   }
 }

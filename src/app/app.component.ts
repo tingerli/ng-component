@@ -13,9 +13,14 @@ const sideBarSetting:Setting[] = [
     text:'首页'
   },
   {
-    path:'button',
+    path:'/button',
     iconClass:'menu-icon fa fa-bomb',
     text:'按钮'
+  },
+  {
+    path:'/table',
+    iconClass:'menu-icon fa fa-table',
+    text:'表单'
   }
 ]
 

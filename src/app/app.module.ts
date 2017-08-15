@@ -27,7 +27,11 @@ const routes:Routes = [
 const ansyncRoutes:Routes = [
   {
     path:'button',
-    loadChildren:'./button/button.module#ButtonModule',
+    loadChildren:'./button-page/button.module#ButtonModule',
+  },
+  {
+    path:'table',
+    loadChildren:'./table-page/table-page.module#TablePageModule',
   }
 ]
 

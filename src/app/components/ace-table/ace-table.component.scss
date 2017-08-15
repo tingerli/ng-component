@@ -1,0 +1,205 @@
+.ace-table {
+  
+}
+// 标题栏
+.ace-table-title {
+    position: relative;
+    height: 40px;
+    line-height: 24px;
+    color: #FFF;
+    background: #307ECC;
+    padding: 0;
+    font-size: 15px;
+    >span {
+      float: left;
+      margin: 8px;
+    }
+    .arrow {
+      position: absolute;
+      top:10%;
+      right: 0px;
+      width: 19px;
+      height: auto;
+      margin: 2px 8px 0 0;
+      padding:0 2px 3px;
+      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover {
+        background-color: rgba(255,255,255,.25);
+      }
+      span {
+        transition: all 0.2s linear ;
+        font-size: 16px;
+        color:#fff;
+      }
+    }
+}
+
+//内容区容器
+.ace-table-content {
+  position: relative;
+}
+$tableBg:#EFF3F8;
+// 头部
+.ace-table-thead{
+  padding-right: 20px;
+  background: $tableBg;
+  table {
+    margin-bottom: 0;
+    tr{
+      background: rgb(242, 242, 242)
+    }
+    span {
+      font-size: 13px;
+      font-weight: bold;
+      color:#777;
+    }
+  }
+}
+// 内容区
+.ace-table-list {
+  padding-right: 20px;
+  background: $tableBg;
+  table {margin-bottom: 0;}
+  .first-row {
+    height: 0;
+    border-top:1px solid #E1E1E1;
+    padding:0;
+    td {
+      padding:0;
+      border:0;
+      background: #E1E1E1;
+    }
+  }
+  tr {
+    background: #F9F9F9;
+    
+  }
+  tr:nth-of-type(2n) {
+    background: #fff;
+  }
+  tr:hover {
+    background: #Eff4f7;
+  }
+  
+}
+
+//拖动线
+.ace-move-line {
+  position: absolute;
+  left:0;
+  top:0;
+  width: 2px;
+  height: 100%;
+  border-radius: 2px;
+  background: #777;
+}
+// 底部
+.ace-table-footer {
+  position: relative;
+  height: 55px;
+  padding:10px 0;
+  margin-bottom: 10px;
+  background-color: #EFF3F8;
+  border-top:1px solid #E1E1E1;
+  border-bottom:1px solid #E1E1E1;
+
+  .ace-table-footer-text {
+    float: right;
+    padding-right: 20px;
+    padding-top: 3px;
+    color:#393939;
+  }
+}
+// 翻页区
+.ace-button-area {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  font-size: 0;
+  li {
+    font-size: 13px;
+    display: inline-block;
+  }
+  .text-area {
+    position: relative;
+    padding:0 10px;
+    vertical-align: middle;
+    margin-right: 8px;
+    input {
+      font-size: inherit;
+      width: 24px;
+      height: 20px;
+      line-height: 16px;
+      box-sizing: content-box;
+      text-align: center;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      margin: 0;
+      border: none;
+    }
+    &:before{
+      display: block;
+      height: 100%;
+      width: 1px;
+      content: "";
+      position: absolute;
+      left:0px;
+      background: #000;
+      opacity: .2;
+    }
+    &:after{
+      display: block;
+      height: 100%;
+      width: 1px;
+      content: "";
+      position: absolute;
+      top:0;
+      right:0px;
+      background: #000;
+      opacity: .2;
+    }
+  }
+  .icon-btn {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    border:1px solid darken(#fff,15%);
+    vertical-align: middle;
+    border-radius: 50%;
+    font-size: 13px;
+    margin-right: 8px;
+    transform: scale(0.95);
+    background: darken(#fff,3%);
+    span {
+      color:#aaa;
+      margin-left: -2px;
+    }
+  }
+
+  .disable {
+    border:1px solid darken(#fff,11%);
+    span {
+      color:darken(#fff,11%);
+    }
+  }
+
+  .hover {
+    border:1px solid #307ECC;
+    cursor: pointer;
+    span {
+      color:#307ECC;
+    }
+  }
+}
+
+.closeAnimate {
+  overflow: hidden;
+  height: 0;
+  transition: all 0.5s;
+}
