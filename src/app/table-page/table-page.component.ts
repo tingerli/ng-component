@@ -21,6 +21,12 @@ export class TablePageComponent implements OnInit {
 		{name:'ship',text:'邮寄方式'},
 		{name:'sdate',text:'时间'}
 	];
+	aceTableWidth=[
+		30,
+		100,
+		50,
+		100
+	];
 	dataSource=[];
   ngOnInit() {
 		setTimeout(()=>{

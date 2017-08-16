@@ -1,20 +1,20 @@
 <div class='col-xs-12 ace-table'>
   <!-- 标题 -->
   <div class='ace-table-title'>
-    <span>我是标题</span>
+    <span>{{title}}</span>
     <a class='arrow' (click)='close()'>
       <span class='fa fa-arrow-up' [ngStyle]='closeIconSty()'></span>
     </a>
   </div>
  
   <!-- <div class='ace-table-content' [ngClass]='closeStatus?"closeAnimate":""' [ngStyle]="contentSty()"> -->
-  <div class='ace-wrap'>
+  <div class='ace-wrap' >
     <div class='ace-table-content' >
       <!-- thead -->
       <div class='ace-table-thead' > 
         <table class='table table-bordered'>
           <tr>
-            <th *ngFor='let item of theadSource'>
+            <th *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)">
               <span>{{item.text}}</span>
             </th>
           </tr>
@@ -23,8 +23,8 @@
       <!--   内容区  -->
       <div class='ace-table-list'>
         <table class='table table-bordered'>
-          <tr class='first-row'> <!-- 这个元素控制宽度，所有tr的宽度  -->
-            <td *ngFor='let item of theadSource'></td>       
+          <tr class='first-row' > <!-- 这个元素控制宽度，所有tr的宽度  -->
+            <td *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)"></td>       
           </tr>
           <tr *ngFor='let data of dataSource'>
             <td *ngFor='let i of getKeys(data)'>{{i}}</td>

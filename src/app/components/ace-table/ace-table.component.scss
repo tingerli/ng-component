@@ -39,6 +39,11 @@
 //内容区容器
 .ace-table-content {
   position: relative;
+  td,& th {
+    // overflow: hidden;
+    // white-space: pre;
+    height: 30px;
+  }
 }
 $tableBg:#EFF3F8;
 // 头部
@@ -46,6 +51,7 @@ $tableBg:#EFF3F8;
   padding-right: 20px;
   background: $tableBg;
   table {
+    table-layout:fixed;
     margin-bottom: 0;
     tr{
       background: rgb(242, 242, 242)
@@ -68,6 +74,7 @@ $tableBg:#EFF3F8;
     padding:0;
     td {
       padding:0;
+      height: 0;
       border:0;
       background: #E1E1E1;
     }

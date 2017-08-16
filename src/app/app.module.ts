@@ -42,7 +42,7 @@ const ansyncRoutes:Routes = [
     BrowserModule,
     FormsModule,
     RouterModule.forChild(ansyncRoutes),
-    RouterModule.forRoot(routes,{useHash:true})
+    RouterModule.forRoot(routes,{useHash:true}),
   ],
   declarations: [
     AppComponent,
