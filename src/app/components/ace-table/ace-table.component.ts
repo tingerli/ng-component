@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, Output, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, ElementRef, NgZone} from '@angular/core';
 
 
 @Component({
@@ -26,10 +26,11 @@ export class AceTableComponent implements OnInit {
   private setColsTotal:number;   //设置的值的固定宽度
   private tdpadding:number;     //td,td padding值
   private closeStatus:boolean = false; //收起
-  constructor(private el:ElementRef) { }
+  constructor(private el:ElementRef,
+    private zone:NgZone,
+  ) { }
   
   ngOnChanges(){
-    console.log('ngOnChanges');
     setTimeout(()=>{
       this.tableResize();
     });
@@ -52,16 +53,16 @@ export class AceTableComponent implements OnInit {
       }
       
     }).then(()=>{
-      
-    }).then(()=>{
       //绑定事件
       let timeout;
-      $(window).on('resize',()=>{
+      window.onresize = (e) =>{
         clearTimeout(timeout);
-        timeout = setTimeout(()=>{
-          this.tableResize();
-        },100)
-      })
+        setTimeout(()=>{
+          this.zone.run(() => {
+            this.tableResize();
+          });
+        },50)
+      };
     })
   }
   
@@ -134,11 +135,11 @@ export class AceTableComponent implements OnInit {
     });
 
     let x = Math.floor((this.tableWidth - this.setColsTotal)/nosetArr.length);
+
     nosetArr.forEach((val)=>{
       this.colsWidth[val]=x;
-    })
-    console.log('平均值',x)
-
+    });
+    
   }
 
   //计算th宽度
