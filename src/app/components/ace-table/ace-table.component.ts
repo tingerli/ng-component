@@ -15,11 +15,16 @@ export class AceTableComponent implements OnInit {
   @Input() totalNum:number;    //数据总数
   @Input() currPage:number;    //当前页码
   @Input() selectMode:string;  //单选还是多选
-  @Input() widths:Array<number>; //默认宽度30;
-  
+  @Input() widths:Array<number>=[]; //默认宽度100;
+  @Input() minWidth:number = 100;//最小宽度
+  @Input() tableHeight:number;   //设置了table高度，如果内容超过该高度自动滚动
+  @Input() rowNumber:number;   //一页的函数，默认10
+
   private wrapEle:any;       //容器
-  private wrapWidth:number;  //容器宽度
   private tableEle:any;      //表格区
+  private theadEle:any;      //头部
+  private contentEle:any;      //内容区
+  private wrapWidth:number;  //容器宽度
   private tableWidth:number;      //表格区宽度
   private colsWidth:Array<number>=[]; //每一列的实际宽度
   private colSetVals:Array<number>=[];  //用户设置的固定宽度，包括拖动，固定宽度
@@ -61,7 +66,7 @@ export class AceTableComponent implements OnInit {
           this.zone.run(() => {
             this.tableResize();
           });
-        },50)
+        },200)
       };
     })
   }
@@ -70,24 +75,30 @@ export class AceTableComponent implements OnInit {
   init() {
     this.wrapEle = (<any>$(this.el.nativeElement)).find('.ace-wrap');
     this.tableEle = $(this.wrapEle).find('.ace-table-content');
+    this.theadEle = (<any>$(this.el.nativeElement)).find('.ace-table-thead');
+    this.contentEle = (<any>$(this.el.nativeElement)).find('.ace-table-list');
   }
   
   //计算没设置固定宽度td的宽度
   styInit(){
+    if('tableHeight' in this ){
+      //设置默认高度
+      $(this.tableEle).height(this.tableHeight);
+    }
+
 
     this.setColsTotal = this.colsWidth.reduce((total,next)=>{
       return total+next;
     },0);
-    //默认值30不足以填满table
+    //默认值minWidth不足以填满table
     var val;
-    if(this.tableWidth>(this.setColsTotal+30*(this.theadSource.length-this.colsWidth.length))){
+    if(this.tableWidth>(this.setColsTotal+this.minWidth*(this.theadSource.length-this.colsWidth.length))){
       //平均分配
       val = Math.floor((this.tableWidth-this.setColsTotal)/(this.theadSource.length-this.colsWidth.length));
     }else{
-      //统一设置为30
-      val=30
+      //统一设置为this.minWidth
+      val=this.minWidth
     }
-    console.log(this.tableWidth,this.setColsTotal+30*(this.theadSource.length-this.colsWidth.length),'val',val);
     for(let i=this.colsWidth.length;i<this.theadSource.length;i++){
       this.colsWidth[i]=val;
     }
@@ -114,7 +125,7 @@ export class AceTableComponent implements OnInit {
       //widths过多，不需要计算默认值
       this.widths.forEach((val,idx)=>{
         if(idx>this.colsWidth.length) return
-        val>30?this.colsWidth[idx]=val:this.colsWidth[idx]=30;
+        val>this.minWidth?this.colsWidth[idx]=val:this.colsWidth[idx]=this.minWidth;
       });
       return false
     }
@@ -135,11 +146,37 @@ export class AceTableComponent implements OnInit {
     });
 
     let x = Math.floor((this.tableWidth - this.setColsTotal)/nosetArr.length);
-
+    x = x>this.minWidth?x:this.minWidth;
     nosetArr.forEach((val)=>{
       this.colsWidth[val]=x;
     });
-    
+    this.checkScroll();
+  }
+  
+  //判断是否需要  横向滚动条  或者纵向滚动条
+  checkScroll(){
+    //纵向
+    var scrollY = 'visible',scollX = 'visible';
+    if('tableHeight' in this){
+      let contentH = $(this.theadEle).height()+$(this.contentEle).height();
+      if(contentH>this.tableHeight){
+        scrollY = 'scroll'
+        $(this.theadEle).css('padding-right',0);
+        $(this.contentEle).css('padding-right',0);
+      }else{
+        $(this.theadEle).css('padding-right',20);
+        $(this.contentEle).css('padding-right',20);
+      }
+    }
+
+    var total = this.colsWidth.reduce((pre,next)=>{
+      return pre+next;
+    });
+    if(total>this.tableWidth){
+       scollX = 'scroll'
+    }
+
+    $(this.tableEle).css({overflowX:scollX,overflowY:scrollY})
   }
 
   //计算th宽度

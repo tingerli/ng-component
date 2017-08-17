@@ -1,5 +1,9 @@
+$tableBg:#EFF3F8;
 .ace-table {
-  
+
+}
+.ace-wrap {
+  background: $tableBg;
 }
 // 标题栏
 .ace-table-title {
@@ -40,12 +44,10 @@
 .ace-table-content {
   position: relative;
   td,& th {
-    // overflow: hidden;
-    // white-space: pre;
     height: 30px;
   }
 }
-$tableBg:#EFF3F8;
+
 // 头部
 .ace-table-thead{
   padding-right: 20px;
