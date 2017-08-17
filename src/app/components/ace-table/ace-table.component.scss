@@ -56,7 +56,12 @@ $tableBg:#EFF3F8;
     tr{
       background: rgb(242, 242, 242)
     }
+    th {
+       overflow: hidden;
+    }
     span {
+      white-space: nowrap;
+
       font-size: 13px;
       font-weight: bold;
       color:#777;
@@ -67,7 +72,10 @@ $tableBg:#EFF3F8;
 .ace-table-list {
   padding-right: 20px;
   background: $tableBg;
-  table {margin-bottom: 0;}
+  table {
+    margin-bottom: 0;
+    table-layout:fixed;
+  }
   .first-row {
     height: 0;
     border-top:1px solid #E1E1E1;
@@ -88,6 +96,12 @@ $tableBg:#EFF3F8;
   }
   tr:hover {
     background: #Eff4f7;
+  }
+  td {
+    overflow: hidden;
+    span {
+      white-space: nowrap;
+    }
   }
   
 }

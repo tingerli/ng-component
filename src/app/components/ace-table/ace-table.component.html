@@ -27,7 +27,9 @@
             <td *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)"></td>       
           </tr>
           <tr *ngFor='let data of dataSource'>
-            <td *ngFor='let i of getKeys(data)'>{{i}}</td>
+            <td *ngFor='let i of getKeys(data)'>
+              <span>{{i}}</span>
+            </td>
           </tr>
         </table>
       </div>
