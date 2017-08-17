@@ -44,7 +44,6 @@ $paddingright:17px;
 //内容区容器
 .ace-table-content {
   position: relative;
-  z-index: 10;
   td,& th {
     height: 30px;
   }
@@ -139,12 +138,12 @@ $paddingright:17px;
   position: absolute;
   left:0;
   top:0;
-  z-index: 20;
+  z-index:2;
   width: 2px;
   height: 100%;
   border-radius: 2px;
   background: #777;
-  opacity: 1;
+  opacity: 0;
 }
 // 底部
 .ace-table-footer {
@@ -253,4 +252,9 @@ $paddingright:17px;
   overflow: hidden;
   height: 0;
   transition: all 0.5s;
+}
+
+.ace-checkbox {
+  text-align: center;
+  width: 50px;
 }

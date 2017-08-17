@@ -14,6 +14,12 @@
     <div class='ace-table-thead' [ngStyle]='{width:wrapWidth-17+"px"}' > 
       <table class='table table-bordered' [ngStyle]='{transform:"translateX("+thOffsetLeft+"px)"}'>
         <tr>
+          <th *ngIf='multipleChoice' class='ace-checkbox'>
+            <label  >
+              <input id="cbxAllMain" type="checkbox" class="ace" [(ngModel)]='selectAll' (click)='onSelectedAll()'>
+              <span class="lbl"></span>
+            </label>
+          </th>
           <th *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)" (mousemove)='thMoving($event,idx)'
             (mousedown)='tdisClilked($event,idx)'>
             <span>{{item.text}}</span>
@@ -27,9 +33,18 @@
       <div class='ace-table-list'>
         <table class='table table-bordered'>
           <tr class='first-row' > <!-- 这个元素控制宽度，所有tr的宽度  -->
+            <td *ngIf='multipleChoice' style="width:50px">
+            </td>
             <td *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)"></td>       
           </tr>
-          <tr *ngFor='let data of dataSource'>
+          <tr *ngFor='let data of dataSource;let idx=index;'>
+            <!--选择框  -->
+            <td *ngIf='multipleChoice' class='ace-checkbox' >
+              <label >
+                <input id="cbxAllMain" type="checkbox" class="ace" [(ngModel)]='checkRow[idx]' (click)='onCheckRow(idx)' >
+                <span class="lbl"></span>
+              </label>
+            </td>
             <td *ngFor='let i of getKeys(data)'>
               <span>{{i}}</span>
             </td>

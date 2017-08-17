@@ -19,7 +19,9 @@ export class AceTableComponent implements OnInit {
   @Input() minWidth:number = 100;//最小宽度
   @Input() tableHeight:number;   //设置了table高度，如果内容超过该高度自动滚动
   @Input() rowNumber:number;   //一页的函数，默认10
-  
+  @Input() multipleChoice:boolean = true; //是否可以多选
+  demo;
+
   private wrapEle:any;       //容器
   private tableEle:any;      //表格区
   private theadEle:any;      //头部
@@ -37,6 +39,8 @@ export class AceTableComponent implements OnInit {
   private setColsTotal:number;   //设置的值的固定宽度
   private tdpadding:number;     //td,td padding值
   private closeStatus:boolean = false; //收起
+  private checkRow:object ={};   //选中的行
+  private selectAll:boolean=false;   //选中的行
   constructor(private el:ElementRef,
     private zone:NgZone,
   ) { }
@@ -154,14 +158,12 @@ export class AceTableComponent implements OnInit {
         nosetArr.push(idx)
       }
     });
-    console.log('参与平均的列表',nosetArr);
-    let x = Math.floor((this.tableWidth - this.setColsTotal)/nosetArr.length);
+    let x = Math.floor((this.tableWidth - this.setColsTotal-(this.multipleChoice?50:0))/nosetArr.length);
     x = x>this.minWidth?x:this.minWidth;
     nosetArr.forEach((val)=>{
       this.colsWidth[val]=x;
     });
     this.checkScroll();
-    console.log('resize',this.colsWidth);
   }
   
   //判断是否需要  横向滚动条  或者纵向滚动条
@@ -225,12 +227,12 @@ export class AceTableComponent implements OnInit {
 
   //拖动横向滚动条
   tableScroll(e:any){
-    if(this.movedCol){
-      e.preventDefault();
-      e.stopPropagation();
-      console.log('阻止默认行为');
-      return
-    }
+    // if(this.movedCol){
+    //   e.preventDefault();
+    //   e.stopPropagation();
+    //   console.log('阻止默认行为');
+    //   return
+    // }
     if(e.target.scrollLeft!=-this.thOffsetLeft){
       this.thOffsetLeft = -e.target.scrollLeft;
     }
@@ -301,5 +303,29 @@ export class AceTableComponent implements OnInit {
       this.movedCol = null;
     }
   }
+
+  //选中一行
+  onCheckRow(idx:number){
+    setTimeout(()=>{
+      // if(target.value){
+      //   this.checkRow[idx] = this.dataSource[idx];
+      // }else{
+      //   this.checkRow[idx]=null;
+      //    delete this.checkRow[idx];
+      // }
+      // console.log('选中的表单',this.checkRow)
+      console.log(this.checkRow);
+    })
+  }
   
+  //全选
+  onSelectedAll(){
+    setTimeout(()=>{
+      console.log('全选',this.selectAll);
+      this.dataSource.forEach((val,idx)=>{
+        this.checkRow[idx]=this.selectAll
+      })
+
+    },30)
+  }
 }
