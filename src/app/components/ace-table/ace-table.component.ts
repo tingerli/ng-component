@@ -19,7 +19,7 @@ export class AceTableComponent implements OnInit {
   @Input() minWidth:number = 100;//最小宽度
   @Input() tableHeight:number;   //设置了table高度，如果内容超过该高度自动滚动
   @Input() rowNumber:number;   //一页的函数，默认10
-
+  
   private wrapEle:any;       //容器
   private tableEle:any;      //表格区
   private theadEle:any;      //头部
@@ -30,8 +30,9 @@ export class AceTableComponent implements OnInit {
   private wrapWidth:number;  //容器宽度
   private tableWidth:number;      //表格区宽度
   private colsWidth:Array<number>=[]; //每一列的实际宽度
-  private movedCol:number;   //可以移动的列的下标
-
+  private movedCol:number|null;   //可以移动的列的下标
+  private moveStarX:number|null = null;  //初始位置
+  private moveCurrX:number|null = null;  //最新的位置
   private colSetVals:Array<number>=[];  //用户设置的固定宽度，包括拖动，固定宽度
   private setColsTotal:number;   //设置的值的固定宽度
   private tdpadding:number;     //td,td padding值
@@ -73,6 +74,8 @@ export class AceTableComponent implements OnInit {
           });
         },200)
       };
+    }).then(()=>{
+      document.body.addEventListener('mouseup',this.mouseUp.bind(this));
     })
   }
   
@@ -89,10 +92,10 @@ export class AceTableComponent implements OnInit {
   //计算没设置固定宽度td的宽度
   styInit(){
     if('tableHeight' in this ){
-      //设置默认高度
-      $(this.tableEle).height(this.tableHeight);
-    }
+      //设置默认高度:
+      $(this.tableEle).css({height:this.tableHeight+'px',overflow:"hidden"});
 
+    }
 
     this.setColsTotal = this.colsWidth.reduce((total,next)=>{
       return total+next;
@@ -151,27 +154,28 @@ export class AceTableComponent implements OnInit {
         nosetArr.push(idx)
       }
     });
-
+    console.log('参与平均的列表',nosetArr);
     let x = Math.floor((this.tableWidth - this.setColsTotal)/nosetArr.length);
     x = x>this.minWidth?x:this.minWidth;
     nosetArr.forEach((val)=>{
       this.colsWidth[val]=x;
     });
     this.checkScroll();
+    console.log('resize',this.colsWidth);
   }
   
   //判断是否需要  横向滚动条  或者纵向滚动条
   checkScroll(){
     //纵向
-    var scrollY = 'visible',scollX = 'visible';
+    var scrollY = 'hidden',scollX = 'hidden';
     if('tableHeight' in this){
-      let contentH = $(this.theadEle).height()+$(this.contentEle).height();
-      if(contentH>this.tableHeight){
+      var h = $(this.contentEle).height();
+      var contentH = $(this.theadEle).height()+h;
+
+      if(contentH>this.tableHeight||h<10){
         scrollY = 'scroll'
-        // $(this.theadEle).css('padding-right',0);
         $(this.contentEle).css('padding-right',0);
       }else{
-        // $(this.theadEle).css('padding-right',20);
         $(this.contentEle).css('padding-right',20);
       }
     }
@@ -182,7 +186,6 @@ export class AceTableComponent implements OnInit {
     if(total>this.tableWidth){
        scollX = 'scroll'
     }
-
     $(this.tableEle).css({overflowX:scollX,overflowY:scrollY})
   }
 
@@ -222,8 +225,15 @@ export class AceTableComponent implements OnInit {
 
   //拖动横向滚动条
   tableScroll(e:any){
-    console.log(e.target.scrollLeft);
-    this.thOffsetLeft = -e.target.scrollLeft;
+    if(this.movedCol){
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('阻止默认行为');
+      return
+    }
+    if(e.target.scrollLeft!=-this.thOffsetLeft){
+      this.thOffsetLeft = -e.target.scrollLeft;
+    }
   }
 
   //th拖动事件
@@ -247,14 +257,49 @@ export class AceTableComponent implements OnInit {
   tdisClilked(e:any,idx){
     if(this.colsWidth[idx]-e.offsetX<20){
       this.movedCol = idx;
+      console.log(idx);
       $(this.moveBlock).css('z-index',10);
     }
   }
   
-  //坐标线位置
+  //坐标线位置, 移动中
   moveBlockEvent(e:any){
+    if('style' in this.lineEle[0]==false ||this.lineEle[0].style.opacity==0){
+      $(this.lineEle).css({opacity:1})
+      this.moveStarX = e.clientX;
+    }
     let offsetX = e.offsetX;
+    this.moveCurrX = e.clientX;
     $(this.lineEle).css('transform','translateX('+offsetX+'px)');
+  }
+
+  //松开鼠标
+  mouseUp(e){
+    if(this.lineEle[0].style.opacity==1){
+      if(this.movedCol==null) return
+      $(this.lineEle).css('opacity',0);
+      $(this.moveBlock).css('z-index',-1);
+      //计算移动的距离
+      let moveSize = this.moveCurrX - this.moveStarX;
+      if(this.colsWidth[this.movedCol]+moveSize<this.minWidth){
+        this.colsWidth[this.movedCol] = this.minWidth;
+      }else{
+        this.colsWidth[this.movedCol] = this.colsWidth[this.movedCol]+moveSize;
+      }
+      this.colSetVals[this.movedCol] = this.colsWidth[this.movedCol] ;
+      console.log('move num',this.colsWidth[this.movedCol]+moveSize);
+      this.setColsTotal = this.colSetVals.reduce((pre,next)=>{
+        if(next){
+          return pre+next;
+        }else{
+          return pre;
+        }
+      })
+      this.tableResize();
+      this.moveCurrX=null;
+      this.moveStarX=null;
+      this.movedCol = null;
+    }
   }
   
 }

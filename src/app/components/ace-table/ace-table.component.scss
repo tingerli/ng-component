@@ -44,6 +44,7 @@ $paddingright:17px;
 //内容区容器
 .ace-table-content {
   position: relative;
+  z-index: 10;
   td,& th {
     height: 30px;
   }
@@ -54,7 +55,7 @@ $paddingright:17px;
   position: relative;
   overflow: hidden;
   background: $tableBg;
-  padding-right: $paddingright;
+  // padding-right: $paddingright;
   table {
     table-layout:fixed;
     margin-bottom: 0;
@@ -62,14 +63,18 @@ $paddingright:17px;
       background: rgb(242, 242, 242)
     }
     th {
-       overflow: hidden;
-       span:hover {
+      
+      overflow: hidden;
+      span:hover {
          color:#547ea8;
-       }
+      }
+      &:last-child {
+        border-right-color: transparent!important;
+      }
     }
     span {
       white-space: nowrap;
-
+      user-select: none;
       font-size: 13px;
       font-weight: bold;
       color:#777;
@@ -81,17 +86,20 @@ $paddingright:17px;
     top:0;
     height: 100%;
     width: 100%;
-    background: red;
     z-index: -1;
-    opacity: .5;
+    opacity: 0;
+    cursor: e-resize;
   }
 }
 // 内容区
 .ace-table-list {
+  position: relative;
   padding-right: $paddingright;
   background: $tableBg;
+
   table {
     margin-bottom: 0;
+    // border:0px;
     table-layout:fixed;
   }
   .first-row {
@@ -123,16 +131,20 @@ $paddingright:17px;
   }
   
 }
-
+.ace-wrap-son {
+  position: relative;
+}
 //拖动线
 .ace-move-line {
   position: absolute;
   left:0;
   top:0;
+  z-index: 20;
   width: 2px;
   height: 100%;
   border-radius: 2px;
   background: #777;
+  opacity: 1;
 }
 // 底部
 .ace-table-footer {

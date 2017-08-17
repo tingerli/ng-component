@@ -7,9 +7,10 @@
     </a>
   </div>
  
-  <!-- <div class='ace-table-content' [ngClass]='closeStatus?"closeAnimate":""' [ngStyle]="contentSty()"> -->
-  <div class='ace-wrap'>
+  <div class='ace-wrap' >
     <!-- thead -->
+    <div class='ace-wrap-son'>
+    <div class='ace-move-line'></div>
     <div class='ace-table-thead' [ngStyle]='{width:wrapWidth-17+"px"}' > 
       <table class='table table-bordered' [ngStyle]='{transform:"translateX("+thOffsetLeft+"px)"}'>
         <tr>
@@ -36,7 +37,7 @@
         </table>
       </div>
       <!--拖动线  -->
-      <div class='ace-move-line'></div>
+    </div>
     </div>
     <!-- 底部  -->
     <div class='ace-table-footer' >

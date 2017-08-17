@@ -22,10 +22,10 @@ export class TablePageComponent implements OnInit {
 		{name:'sdate',text:'时间'}
 	];
 	widths=[
-		200,
-		200,
-		200,
-		400
+		// 200,
+		// 200,
+		// 200,
+		// 400
 	];
 	aceTableWidth=[];
 	dataSource=[];
