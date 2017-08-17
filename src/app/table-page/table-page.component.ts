@@ -21,6 +21,12 @@ export class TablePageComponent implements OnInit {
 		{name:'ship',text:'邮寄方式'},
 		{name:'sdate',text:'时间'}
 	];
+	widths=[
+		200,
+		200,
+		200,
+		400
+	];
 	aceTableWidth=[];
 	dataSource=[];
   ngOnInit() {
@@ -50,7 +56,7 @@ export class TablePageComponent implements OnInit {
 				{id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
 				{id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
 			];
-		},2000)
+		},500)
 
 	}
 

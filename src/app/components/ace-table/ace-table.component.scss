@@ -1,4 +1,5 @@
 $tableBg:#EFF3F8;
+$paddingright:17px;
 .ace-table {
 
 }
@@ -50,8 +51,10 @@ $tableBg:#EFF3F8;
 
 // 头部
 .ace-table-thead{
-  padding-right: 20px;
+  position: relative;
+  overflow: hidden;
   background: $tableBg;
+  padding-right: $paddingright;
   table {
     table-layout:fixed;
     margin-bottom: 0;
@@ -60,6 +63,9 @@ $tableBg:#EFF3F8;
     }
     th {
        overflow: hidden;
+       span:hover {
+         color:#547ea8;
+       }
     }
     span {
       white-space: nowrap;
@@ -69,10 +75,20 @@ $tableBg:#EFF3F8;
       color:#777;
     }
   }
+  .ace-move-block {
+    position: absolute;
+    left: 0;
+    top:0;
+    height: 100%;
+    width: 100%;
+    background: red;
+    z-index: -1;
+    opacity: .5;
+  }
 }
 // 内容区
 .ace-table-list {
-  padding-right: 20px;
+  padding-right: $paddingright;
   background: $tableBg;
   table {
     margin-bottom: 0;
@@ -130,7 +146,7 @@ $tableBg:#EFF3F8;
 
   .ace-table-footer-text {
     float: right;
-    padding-right: 20px;
+    padding-right: $paddingright;
     padding-top: 3px;
     color:#393939;
   }

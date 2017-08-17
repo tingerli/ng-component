@@ -23,10 +23,15 @@ export class AceTableComponent implements OnInit {
   private wrapEle:any;       //容器
   private tableEle:any;      //表格区
   private theadEle:any;      //头部
+  private thOffsetLeft:number = 0; //头部偏移量
   private contentEle:any;      //内容区
+  private moveBlock:any;     //拖动的模型
+  private lineEle:any;       //标志线
   private wrapWidth:number;  //容器宽度
   private tableWidth:number;      //表格区宽度
   private colsWidth:Array<number>=[]; //每一列的实际宽度
+  private movedCol:number;   //可以移动的列的下标
+
   private colSetVals:Array<number>=[];  //用户设置的固定宽度，包括拖动，固定宽度
   private setColsTotal:number;   //设置的值的固定宽度
   private tdpadding:number;     //td,td padding值
@@ -77,6 +82,8 @@ export class AceTableComponent implements OnInit {
     this.tableEle = $(this.wrapEle).find('.ace-table-content');
     this.theadEle = (<any>$(this.el.nativeElement)).find('.ace-table-thead');
     this.contentEle = (<any>$(this.el.nativeElement)).find('.ace-table-list');
+    this.moveBlock = (<any>$(this.el.nativeElement)).find('.ace-move-block');
+    this.lineEle = (<any>$(this.el.nativeElement)).find('.ace-move-line');
   }
   
   //计算没设置固定宽度td的宽度
@@ -107,7 +114,7 @@ export class AceTableComponent implements OnInit {
   //获取宽度,wrap 跟table，如果table大于wrap，需要添加滚动属性给wrap
   getElementWidth(){
     this.wrapWidth = $(this.wrapEle).width();
-    this.tableWidth = $(this.tableEle).width()-20;
+    this.tableWidth = $(this.tableEle).width()-17;
   }
   
   //设置用户自定义的宽度
@@ -161,10 +168,10 @@ export class AceTableComponent implements OnInit {
       let contentH = $(this.theadEle).height()+$(this.contentEle).height();
       if(contentH>this.tableHeight){
         scrollY = 'scroll'
-        $(this.theadEle).css('padding-right',0);
+        // $(this.theadEle).css('padding-right',0);
         $(this.contentEle).css('padding-right',0);
       }else{
-        $(this.theadEle).css('padding-right',20);
+        // $(this.theadEle).css('padding-right',20);
         $(this.contentEle).css('padding-right',20);
       }
     }
@@ -193,7 +200,8 @@ export class AceTableComponent implements OnInit {
       (<any>$('.ace-wrap')).slideDown();
     }
   }
-
+  
+  //关闭表单时候的按钮动画
   closeIconSty(){
     // return this.closeStatus?{display:'none'}:{display:'block'};
     if(this.closeStatus){
@@ -203,6 +211,7 @@ export class AceTableComponent implements OnInit {
     }
   }
   
+  //获取key值
   getKeys(data:any){
     var arr=[];
     this.theadSource.forEach(function(val:any,idx:number){
@@ -210,4 +219,42 @@ export class AceTableComponent implements OnInit {
     });
     return arr;
   }
+
+  //拖动横向滚动条
+  tableScroll(e:any){
+    console.log(e.target.scrollLeft);
+    this.thOffsetLeft = -e.target.scrollLeft;
+  }
+
+  //th拖动事件
+  //1.只能在右边拖动
+  //2.20px是触发的条件
+  //3.鼠标变形
+  //4.点击之后，隐藏标签出现，获取offsetX
+  //5.隐藏标签有mouseon事件，竖条跟着走。
+  //6.松开鼠标结束
+  //7.判断能否移动到该位置（过小的问题）
+  thMoving(e:any,idx){
+    if(this.colsWidth[idx]-e.offsetX<20){
+      $(e.target).css({cursor:'e-resize'})
+    }else{
+      $(e.target).css({cursor:'default'})
+    }
+    
+  }
+  
+  //记录下移动的th的下标
+  tdisClilked(e:any,idx){
+    if(this.colsWidth[idx]-e.offsetX<20){
+      this.movedCol = idx;
+      $(this.moveBlock).css('z-index',10);
+    }
+  }
+  
+  //坐标线位置
+  moveBlockEvent(e:any){
+    let offsetX = e.offsetX;
+    $(this.lineEle).css('transform','translateX('+offsetX+'px)');
+  }
+  
 }
