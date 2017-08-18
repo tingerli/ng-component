@@ -128,7 +128,12 @@ $paddingright:17px;
       white-space: nowrap;
     }
   }
-  
+  .ace-checked-row {
+    td {
+      background-color: #dff0d8;
+      border-color: #d6e9c6;
+    }
+  }
 }
 .ace-wrap-son {
   position: relative;

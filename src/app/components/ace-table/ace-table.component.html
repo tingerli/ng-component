@@ -13,6 +13,7 @@
     <div class='ace-move-line'></div>
     <div class='ace-table-thead' [ngStyle]='{width:wrapWidth-17+"px"}' > 
       <table class='table table-bordered' [ngStyle]='{transform:"translateX("+thOffsetLeft+"px)"}'>
+        <!--全选按钮  -->
         <tr>
           <th *ngIf='multipleChoice' class='ace-checkbox'>
             <label  >
@@ -37,8 +38,8 @@
             </td>
             <td *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)"></td>       
           </tr>
-          <tr *ngFor='let data of dataSource;let idx=index;'>
-            <!--选择框  -->
+          <tr *ngFor='let data of dataSource;let idx=index;' [ngClass]='checkRow[idx]?"ace-checked-row":""'>
+            <!--多选框  -->
             <td *ngIf='multipleChoice' class='ace-checkbox' >
               <label >
                 <input id="cbxAllMain" type="checkbox" class="ace" [(ngModel)]='checkRow[idx]' (click)='onCheckRow(idx)' >

@@ -307,21 +307,18 @@ export class AceTableComponent implements OnInit {
   //选中一行
   onCheckRow(idx:number){
     setTimeout(()=>{
-      // if(target.value){
-      //   this.checkRow[idx] = this.dataSource[idx];
-      // }else{
-      //   this.checkRow[idx]=null;
-      //    delete this.checkRow[idx];
-      // }
-      // console.log('选中的表单',this.checkRow)
-      console.log(this.checkRow);
+      var num = 0;
+      for(var i in this.checkRow){
+        if(this.checkRow[i]==false) break;
+        num++
+      };
+      this.selectAll = num==this.dataSource.length;
     })
   }
   
   //全选
   onSelectedAll(){
     setTimeout(()=>{
-      console.log('全选',this.selectAll);
       this.dataSource.forEach((val,idx)=>{
         this.checkRow[idx]=this.selectAll
       })
