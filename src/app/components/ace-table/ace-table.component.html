@@ -8,6 +8,7 @@
   </div>
  
   <div class='ace-wrap' >
+     
     <!-- thead -->
     <div class='ace-wrap-son'>
     <div class='ace-move-line'></div>
@@ -57,6 +58,18 @@
     </div>
     <!-- 底部  -->
     <div class='ace-table-footer' >
+      <!-- 每页显示数量 -->
+      <div class='select-page-block'>
+        <span>每页显示数量：</span>
+        <select  (change)='onPageNumerChanged($event)'>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+        </select>
+      </div>
+      
       <!--翻页区  -->
       <ul class='ace-button-area'>
         <li class='icon-btn'>
@@ -67,11 +80,11 @@
         </li>
         <li class='text-area'>
           <span>
-            page
+            第
           </span>
-          <input type="text"  value="1">
+          <input type="text"  [(ngModel)]='dataInf.page'>
           <span>
-            of 3
+            共 {{dataInf.total?dataInf.total:"X"}}
           </span>
         </li>
         <li class='icon-btn' >
@@ -82,8 +95,17 @@
       </ul>
       <!--显示区  -->
       <div class='ace-table-footer-text'>
-          View 1 - 10 of 23
+          <span >当前 {{dataInf.startId?dataInf.startId:"X"}} - {{dataInf.endId?dataInf.endId:"X"}} 行 ，共 {{dataInf.total?dataInf.total:"X"}} 行 </span>
       </div>
+    </div>
+     <!--加载动画  -->
+    <div class='ace-table-loadding' *ngIf='loading'>
+      <i class='ace-icon'></i>
+    </div>
+    <!--提示框  -->
+    <div class="ace-table-modal" *ngIf='modalState.show'>
+      <i class="fa fa-info-circle"></i>
+      初次打开页面不加载数据，请组合条件进行搜索数据...
     </div>
   </div>
 </div>

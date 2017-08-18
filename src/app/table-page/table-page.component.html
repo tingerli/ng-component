@@ -6,7 +6,7 @@
     属性
   </h5>
   <ace-table [theadSource]='theadSource' [dataSource]='dataSource' [title]='title' 
-  [widths]='widths'  [tableHeight]='500'></ace-table>
+  [widths]='widths'  [tableHeight]='500' (onSelect)='onselect($event)' (onChangePageNum)='change($event)'></ace-table>
 
 
 

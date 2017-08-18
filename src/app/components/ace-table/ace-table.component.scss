@@ -1,7 +1,7 @@
 $tableBg:#EFF3F8;
 $paddingright:17px;
 .ace-table {
-
+  position: relative;
 }
 .ace-wrap {
   background: $tableBg;
@@ -159,12 +159,22 @@ $paddingright:17px;
   background-color: #EFF3F8;
   border-top:1px solid #E1E1E1;
   border-bottom:1px solid #E1E1E1;
-
-  .ace-table-footer-text {
+  //底部数量说明
+  .ace-table-footer-text,.select-page-block {
     float: right;
     padding-right: $paddingright;
-    padding-top: 3px;
+    padding-top: 8px;
     color:#393939;
+    span {
+      font-size: 12px;
+      // display: inline-block;
+      // vertical-align: middle;
+    }
+  }
+  .select-page-block {
+    padding-left: $paddingright;
+    padding-top: 3px;
+    float: left;
   }
 }
 // 翻页区
@@ -262,4 +272,48 @@ $paddingright:17px;
 .ace-checkbox {
   text-align: center;
   width: 50px;
+}
+
+//loadding 动画
+.ace-table-loadding {
+  position: absolute;
+  z-index: 100;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  left: 50%;
+  top:100px;
+  transform: translate(-50%,0);
+  i {
+    display: inline-block;
+    height:30px;
+    width: 30px;
+    background-size: cover;
+    background-image: url(./icon/spinner.svg);
+    animation:iconRotate 1s linear infinite;
+  }
+}
+
+@keyframes iconRotate{
+  0% {transform: rotate(0deg)};
+  100% {transform: rotate(360deg)};
+}
+
+.ace-table-modal{
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #aaa;
+    background: #fff;
+    box-shadow: #eee 5px 5px 10px;
+    text-align: center;
+
+    transform: translate(-50%, -50%);
+    i {
+      color: #FCA613;
+    }
 }

@@ -1,5 +1,17 @@
-import { Component, OnInit, ViewEncapsulation, Input, Output, ElementRef, NgZone} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, ElementRef, NgZone, EventEmitter} from '@angular/core';
 
+interface DataInfo {
+  page:number;
+  totalPage?:number;
+  total?:number;
+  startId?:number;
+  endId?:number;
+}
+
+interface ModalState {
+  show:boolean;
+  text?:string;
+}
 
 @Component({
   selector: 'ace-table',
@@ -9,7 +21,6 @@ import { Component, OnInit, ViewEncapsulation, Input, Output, ElementRef, NgZone
 })
 export class AceTableComponent implements OnInit {
   @Input() title:string='表格';      //表格标题
-  @Input() loading:boolean;   //加载中
   @Input() dataSource:Array<object> //遍历的数据
   @Input() theadSource:Array<object> //表头数据
   @Input() totalNum:number;    //数据总数
@@ -20,7 +31,16 @@ export class AceTableComponent implements OnInit {
   @Input() tableHeight:number;   //设置了table高度，如果内容超过该高度自动滚动
   @Input() rowNumber:number;   //一页的函数，默认10
   @Input() multipleChoice:boolean = true; //是否可以多选
-  demo;
+  @Input() loading:boolean = false;   //加载动画
+  @Input() dataInf:DataInfo = {     //数据的相关信息
+    page:1
+  };
+  @Input() modalState:ModalState = { //modal框的设置
+    show:false
+  };
+  @Output() onSelect = new EventEmitter();  //选中了某一行触发的事件
+  @Output() onChangePageNum = new EventEmitter();  //改变了每页行数的事件
+
 
   private wrapEle:any;       //容器
   private tableEle:any;      //表格区
@@ -312,6 +332,7 @@ export class AceTableComponent implements OnInit {
         if(this.checkRow[i]==false) break;
         num++
       };
+      this.emitSelect()
       this.selectAll = num==this.dataSource.length;
     })
   }
@@ -322,7 +343,17 @@ export class AceTableComponent implements OnInit {
       this.dataSource.forEach((val,idx)=>{
         this.checkRow[idx]=this.selectAll
       })
-
+      this.emitSelect();
     },30)
+  }
+
+  //output 返回选中的数据
+  emitSelect(){
+    this.onSelect.emit(this.checkRow);
+  }
+  
+  //改变每页行数
+  onPageNumerChanged(e:any){
+    this.onChangePageNum.emit(e.target.value);
   }
 }
