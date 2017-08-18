@@ -23,9 +23,8 @@ export class AceTableComponent implements OnInit {
   @Input() title:string='表格';      //表格标题
   @Input() dataSource:Array<object> //遍历的数据
   @Input() theadSource:Array<object> //表头数据
-  @Input() totalNum:number;    //数据总数
-  @Input() currPage:number;    //当前页码
-  @Input() selectMode:string;  //单选还是多选
+  // @Input() totalNum:number;    //数据总数
+  // @Input() currPage:number;    //当前页码
   @Input() widths:Array<number>=[]; //默认宽度100;
   @Input() minWidth:number = 100;//最小宽度
   @Input() tableHeight:number;   //设置了table高度，如果内容超过该高度自动滚动
@@ -38,9 +37,10 @@ export class AceTableComponent implements OnInit {
   @Input() modalState:ModalState = { //modal框的设置
     show:false
   };
+
   @Output() onSelect = new EventEmitter();  //选中了某一行触发的事件
   @Output() onChangePageNum = new EventEmitter();  //改变了每页行数的事件
-
+  
 
   private wrapEle:any;       //容器
   private tableEle:any;      //表格区
@@ -349,7 +349,13 @@ export class AceTableComponent implements OnInit {
 
   //output 返回选中的数据
   emitSelect(){
-    this.onSelect.emit(this.checkRow);
+    var arr = [];
+    for(var i in this.checkRow){
+      if(this.checkRow[i]){
+        arr.push(this.dataSource[i])
+      }
+    }
+    this.onSelect.emit(arr);
   }
   
   //改变每页行数

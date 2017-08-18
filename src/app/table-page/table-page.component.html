@@ -5,16 +5,64 @@
   <h5 class="text-warning">
     属性
   </h5>
-  <ace-table [theadSource]='theadSource' [dataSource]='dataSource' [title]='title' 
-  [widths]='widths'  [tableHeight]='500' (onSelect)='onselect($event)' (onChangePageNum)='change($event)'></ace-table>
+  <table class='table-striped table-bordered table'>
+    <tr>
+      <th *ngFor='let th of proTable.th'>{{th}}</th>
+    </tr>
+    <tr *ngFor='let item of proTable.tbody'>
+      <td *ngFor='let key of getKeys(item)'>
+        <p [innerHTML]='key'></p>
+      </td>
+    </tr>
+  </table>
+  <h5 class="text-warning">
+    事件
+  </h5>
+  <table class='table-striped table-bordered table'>
+    <tr>
+      <th *ngFor='let th of eventTable.th'>{{th}}</th>
+    </tr>
+    <tr *ngFor='let item of eventTable.tbody'>
+      <td *ngFor='let key of getEventKeys(item)'>
+        <p [innerHTML]='key'></p>
+      </td>
+    </tr>
+  </table>
+  <h5 class="text-warning">
+    提示框 [modalState]
+  </h5>
+  <ace-table [theadSource]='theadSource' [dataSource]='demo1.dataSource' [title]='demo1.title' 
+  [widths]='demo1.widths'  [tableHeight]='200' [modalState]='demo1.modalState'></ace-table>
 
-
-
-  <div class='col-xs-12'>
-    <table id='demo' class='table-striped table-bordered table'>
-
-    </table>
-    <div id="grid-pager"></div>
-  </div>
+  <h5 class="text-warning">
+    表格高度 [tableHeight]
+  </h5>
+  <ace-table [theadSource]='theadSource' [dataSource]='demo2.dataSource' [title]='demo2.title' 
+  [widths]='demo2.widths'   [modalState]='demo2.modalState'></ace-table>
+  <br>
+  <ace-table [theadSource]='theadSource' [dataSource]='demo3.dataSource' [title]='demo3.title' 
+  [widths]='demo3.widths'   [modalState]='demo3.modalState' [tableHeight]='400'></ace-table>
   
+  <h5 class="text-warning">
+    设定每一列的宽度 [widths] 不能小于100，选择框行无法设置
+  </h5>
+  <ace-table [theadSource]='theadSource' [dataSource]='demo4.dataSource' [title]='demo4.title' 
+  [widths]='demo4.widths'   [modalState]='demo4.modalState'></ace-table>
+  <br>
+
+  <h5 class="text-warning">
+    [multipleChoice]  多选框  默认是 true
+  </h5>
+  <ace-table [theadSource]='theadSource' [dataSource]='demo5.dataSource' [title]='demo5.title' 
+  [widths]='demo5.widths'  [multipleChoice]='demo5.multipleChoice'></ace-table>
+  
+  <h5 class="text-warning">
+    EVENT onSelect($event)
+  </h5>
+  <ace-table [theadSource]='theadSource' [dataSource]='demo4.dataSource' [title]='"勾选的event事件"' 
+  [widths]='demo4.widths'   [modalState]='demo4.modalState' (onSelect)='mySelector($event)'></ace-table>
+  <br>
+  <p>
+    勾选的行数 [ <span *ngFor='let i of selectedRow;let idx=index;'>{{i.id}}<span *ngIf='idx!=(selectedRow.length-1)'>,</span> </span> ]
+  </p>
 </div>

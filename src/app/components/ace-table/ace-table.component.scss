@@ -5,6 +5,7 @@ $paddingright:17px;
 }
 .ace-wrap {
   background: $tableBg;
+  
 }
 // 标题栏
 .ace-table-title {
@@ -93,6 +94,8 @@ $paddingright:17px;
 // 内容区
 .ace-table-list {
   position: relative;
+  
+  min-height: 150px;
   padding-right: $paddingright;
   background: $tableBg;
 
@@ -302,7 +305,7 @@ $paddingright:17px;
 .ace-table-modal{
     position: absolute;
     display: inline-block;
-    top: 50%;
+    top: 150px;
     left: 50%;
     padding: 20px;
     line-height: 30px;
