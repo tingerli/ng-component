@@ -2,13 +2,17 @@ $tableBg:#EFF3F8;
 $paddingright:17px;
 .ace-table {
   position: relative;
+  
 }
 .ace-wrap {
+  position: relative;
+  z-index: 5;
   background: $tableBg;
-  
+  box-shadow: 1px 1px 1px #888888;
 }
 // 标题栏
 .ace-table-title {
+    box-shadow: 1px 0px 1px #888888;
     position: relative;
     height: 40px;
     line-height: 24px;

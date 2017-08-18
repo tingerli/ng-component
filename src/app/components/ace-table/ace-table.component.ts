@@ -23,8 +23,6 @@ export class AceTableComponent implements OnInit {
   @Input() title:string='表格';      //表格标题
   @Input() dataSource:Array<object> //遍历的数据
   @Input() theadSource:Array<object> //表头数据
-  // @Input() totalNum:number;    //数据总数
-  // @Input() currPage:number;    //当前页码
   @Input() widths:Array<number>=[]; //默认宽度100;
   @Input() minWidth:number = 100;//最小宽度
   @Input() tableHeight:number;   //设置了table高度，如果内容超过该高度自动滚动
@@ -61,6 +59,8 @@ export class AceTableComponent implements OnInit {
   private closeStatus:boolean = false; //收起
   private checkRow:object ={};   //选中的行
   private selectAll:boolean=false;   //选中的行
+  private windowResize:any;     //window.onresize 绑定的函数
+  private mouseUpFunction:any;     //window.mouseup 绑定的函数
   constructor(private el:ElementRef,
     private zone:NgZone,
   ) { }
@@ -90,19 +90,31 @@ export class AceTableComponent implements OnInit {
     }).then(()=>{
       //绑定事件
       let timeout;
-      window.onresize = (e) =>{
-        clearTimeout(timeout);
-        setTimeout(()=>{
-          this.zone.run(() => {
-            this.tableResize();
-          });
-        },200)
+      this.windowResize = function(){
+        console.log('resize');
+          clearTimeout(timeout);
+          setTimeout(()=>{
+            this.zone.run(() => {
+              this.tableResize();
+            });
+          },200)
       };
+      this.windowResize = this.windowResize.bind(this);
+      window.addEventListener('resize',this.windowResize);
+
     }).then(()=>{
-      document.body.addEventListener('mouseup',this.mouseUp.bind(this));
+      this.mouseUpFunction = this.mouseUp.bind(this);
+      document.body.addEventListener('mouseup',this.mouseUpFunction);
     })
   }
+
+  ngOnDestroy(){
+    document.body.removeEventListener('mouseup',this.mouseUpFunction);
+    window.removeEventListener('resize',this.windowResize);
+
+  }
   
+
   //获取关键节点
   init() {
     this.wrapEle = (<any>$(this.el.nativeElement)).find('.ace-wrap');
@@ -165,6 +177,8 @@ export class AceTableComponent implements OnInit {
     }
   }
   
+
+
   //resize table
   tableResize(){
     if(!this.wrapEle) return
@@ -220,9 +234,9 @@ export class AceTableComponent implements OnInit {
   close(){
     this.closeStatus = !this.closeStatus;
     if(this.closeStatus){
-      (<any>$('.ace-wrap')).slideUp();
+      (<any>$(this.wrapEle)).slideUp();
     }else{
-      (<any>$('.ace-wrap')).slideDown();
+      (<any>$(this.wrapEle)).slideDown();
     }
   }
   

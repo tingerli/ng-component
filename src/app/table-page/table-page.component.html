@@ -60,7 +60,7 @@
     EVENT onSelect($event)
   </h5>
   <ace-table [theadSource]='theadSource' [dataSource]='demo4.dataSource' [title]='"勾选的event事件"' 
-  [widths]='demo4.widths'   [modalState]='demo4.modalState' (onSelect)='mySelector($event)'></ace-table>
+  [widths]='demo4.widths'   [modalState]='demo4.modalState' [tableHeight]='200' (onSelect)='mySelector($event)'></ace-table>
   <br>
   <p>
     勾选的行数 [ <span *ngFor='let i of selectedRow;let idx=index;'>{{i.id}}<span *ngIf='idx!=(selectedRow.length-1)'>,</span> </span> ]
