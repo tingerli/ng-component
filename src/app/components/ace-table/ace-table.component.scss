@@ -8,11 +8,11 @@ $paddingright:17px;
   position: relative;
   z-index: 5;
   background: $tableBg;
-  box-shadow: 1px 1px 1px #888888;
+  box-shadow: 0px 0px 10px #888888;
 }
 // 标题栏
 .ace-table-title {
-    box-shadow: 1px 0px 1px #888888;
+    box-shadow: 0px 0px 10px #888888;
     position: relative;
     height: 40px;
     line-height: 24px;
@@ -241,21 +241,30 @@ $paddingright:17px;
     width: 22px;
     height: 22px;
     text-align: center;
-    border:1px solid darken(#fff,15%);
+    border:1px solid #888;
     vertical-align: middle;
     border-radius: 50%;
-    font-size: 13px;
+    font-size: 11px;
     margin-right: 8px;
     transform: scale(0.95);
-    background: darken(#fff,3%);
+    background: darken(#fff,1%);
+    cursor: pointer;
     span {
-      color:#aaa;
+      color:#888;
       margin-left: -2px;
+      transform: translate(1px,2px);
+    }
+  }
+  .toLeft {
+    font-size: 11px;
+    span{
+      transform: translate(3px,2px);
     }
   }
 
   .disable {
     border:1px solid darken(#fff,11%);
+    cursor:not-allowed;
     span {
       color:darken(#fff,11%);
     }

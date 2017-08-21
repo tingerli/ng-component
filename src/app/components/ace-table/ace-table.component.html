@@ -40,7 +40,7 @@
             </td>
             <td *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)"></td>       
           </tr>
-          <tr *ngFor='let data of dataSource;let idx=index;' [ngClass]='checkRow[idx]?"ace-checked-row":""'>
+          <tr *ngFor='let data of dataSource.slice(0,rowNumber);let idx=index;' [ngClass]='checkRow[idx]?"ace-checked-row":""'>
             <!--多选框  -->
             <td *ngIf='multipleChoice' class='ace-checkbox' >
               <label >
@@ -73,10 +73,10 @@
       
       <!--翻页区  -->
       <ul class='ace-button-area'>
-        <li class='icon-btn'>
+        <li class='icon-btn' (click)='onToPage(1)' [ngClass]='onCheckChangePageAU("first")'>
           <span class='ui-icon ace-icon fa fa-angle-double-left bigger-140'></span>
         </li>
-        <li class='icon-btn' >
+        <li class='icon-btn' (click)='onToPage(dataInf.page-1)' [ngClass]='onCheckChangePageAU("pre")'>
           <span class='ui-icon ace-icon fa fa-angle-left bigger-140'></span>
         </li>
         <li class='text-area'>
@@ -85,18 +85,21 @@
           </span>
           <input type="text"  [(ngModel)]='dataInf.page'>
           <span>
-            共 {{dataInf.total?dataInf.total:"X"}}
+            共 {{dataInf.totalPage?dataInf.totalPage:"X"}}
           </span>
         </li>
-        <li class='icon-btn' >
+        <li class='icon-btn toLeft' (click)='onToPage(dataInf.page+1)'  [ngClass]='onCheckChangePageAU("next")'>
           <span class='ui-icon ace-icon fa fa-angle-right bigger-140'></span>
-        </li><li class='icon-btn' >
+        </li>
+        <li class='icon-btn toLeft' (click)='onToPage(dataInf.totalPage)' [ngClass]='onCheckChangePageAU("last")'>
           <span class='ui-icon ace-icon fa fa-angle-double-right bigger-140'></span>
         </li>
       </ul>
+
       <!--显示区  -->
       <div class='ace-table-footer-text'>
-          <span >当前 {{dataInf.startId?dataInf.startId:"X"}} - {{dataInf.endId?dataInf.endId:"X"}} 行 ，共 {{dataInf.total?dataInf.total:"X"}} 行 </span>
+          <span >当前 {{(dataInf.startId||dataInf.startId==0)?dataInf.startId:"X"}} - {{(dataInf.endId||dataInf.endId==0)?dataInf.endId:"X"}} 行 ，
+            共 {{(dataInf.total||dataInf.total==0)?dataInf.total:"X"}} 行 </span>
       </div>
     </div>
      <!--加载动画  -->

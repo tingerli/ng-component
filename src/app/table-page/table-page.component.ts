@@ -3,6 +3,17 @@ import '../../assets/js/jquery.jqGrid.min.js';
 import '../../assets/js/bootstrap-datepicker.min.js';
 import '../../assets/js/grid.locale-en.js'
 
+var list = [{id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+			{id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+			{id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+			{id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
+			{id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
+			{id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+			{id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
+			{id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+			{id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+			{id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+			{id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"}]
 
 @Component({
   selector: 'app-table-page',
@@ -12,8 +23,38 @@ import '../../assets/js/grid.locale-en.js'
 })
 export class TablePageComponent implements OnInit {
 	constructor() { }
+		demo4 = {
+		title:'Demo1 设置前5列的的宽度为200',
+		widths:[200,200,200,200,200],
+		dataSource:[
+			{id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+			{id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+			{id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+			{id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
+			{id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
+			{id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+			{id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
+			{id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+			{id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+			{id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+			{id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+		],
+		modalState:{
+			show:false,
+			text:'初次打开页面不加载数据，请组合条件进行搜索数据...'
+		},
+		dataInf:{
+			page:1,
+			totalPage:3,
+			total:32,
+			startId:1,
+			endId:10
+		},
+		loading:false,
+		rowNumber:10
+	};
 	demo1 = {
-		title:'Demo1 提示框',
+		title:'Demo2 提示框',
 		widths:[],
 		dataSource:[],
 		modalState:{
@@ -22,7 +63,7 @@ export class TablePageComponent implements OnInit {
 		}
 	};
 	demo2 = {
-		title:'Demo2 不设置表格高度tableHeight',
+		title:'Demo3 不设置表格高度tableHeight',
 		widths:[],
 		dataSource:[
 			{id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
@@ -43,7 +84,7 @@ export class TablePageComponent implements OnInit {
 		}
 	};
 	demo3 = {
-		title:'Demo3 设置表格宽度tableHeight  最小值为150 ',
+		title:'Demo4 设置表格宽度tableHeight  最小值为150 ',
 		widths:[],
 		dataSource:[
 			{id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
@@ -63,27 +104,7 @@ export class TablePageComponent implements OnInit {
 			text:'初次打开页面不加载数据，请组合条件进行搜索数据...'
 		}
 	};
-	demo4 = {
-		title:'Demo4 设置前5列的的宽度为200',
-		widths:[200,200,200,200,200],
-		dataSource:[
-			{id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-			{id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-			{id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-			{id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-			{id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-			{id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-			{id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-			{id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-			{id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-			{id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-			{id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-		],
-		modalState:{
-			show:false,
-			text:'初次打开页面不加载数据，请组合条件进行搜索数据...'
-		}
-	};
+
 	demo5 = {
 		title:'Demo5 不要选择框 [multipleChoice]',
 		widths:[],
@@ -157,6 +178,13 @@ export class TablePageComponent implements OnInit {
 	      default:'- '
 			},
 			{
+	      name:'loading',
+	      text:'加载动画',
+				type:'boolean',
+				demo:" - ",
+	      default:'false '
+			},
+			{
 	      name:'multipleChoice',
 	      text:'是否出现多选框',
 				type:'boolean',
@@ -176,7 +204,12 @@ export class TablePageComponent implements OnInit {
 				`,
 				type:'object',
 				demo:" - ",
-	      default:'{page:1}'
+	      default:`{<br>
+						page:1,<br>
+				    totalPage:1,<br>
+				    total:10,<br>
+				    startId:1,<br>
+				    endId:10<br>}`
 			},
 			{
 	      name:'modalState',
@@ -204,8 +237,13 @@ export class TablePageComponent implements OnInit {
 				type:'Array<object>'
 			},
 			{
-				event:'onChangePageNum',
-				text:"更改了每页显示数量时候触发",
+				event:'onChangeRows',
+				text:"更改了每页显示的行数时候触发",
+				type:'number'
+			},
+			{
+				event:'onChangePage',
+				text:"翻页时候触发",
 				type:'number'
 			},
 		]
@@ -229,4 +267,40 @@ export class TablePageComponent implements OnInit {
 
 	}
 	
+	//demo4换页
+	changeDemo4Page(page:number){
+		var arr = [];
+		this.demo4.dataInf.page = page;
+		this.demo4.loading = true;
+		
+		if(page<3){
+			for(var i=0;i<this.demo4.rowNumber;i++){
+				let obj = JSON.parse(JSON.stringify(list[Math.floor(Math.random()*10)]));
+				obj.id =( page-1)*this.demo4.rowNumber+i+1;
+				arr.push(obj);
+			}
+		}else{
+			for(var i=0;i<2;i++){
+				let obj = JSON.parse(JSON.stringify(list[Math.floor(Math.random()*10)]));
+				obj.id =( page-1)*this.demo4.rowNumber+i+1;
+				arr.push(obj);
+			}
+		}
+		
+
+		setTimeout(()=>{
+			this.demo4.dataSource = arr;
+			this.demo4.loading = false;
+			this.demo4.dataInf.startId = (page-1)*this.demo4.rowNumber+1;
+			this.demo4.dataInf.endId = (page-1)*this.demo4.rowNumber+arr.length;
+		},1000)
+	}
+	
+	//demo4 换显示数量
+	changeDemo4Rows(num:number){
+		if(this.demo4.rowNumber!=num){ 
+			 this.demo4.rowNumber = num;
+			this.changeDemo4Page(this.demo4.dataInf.page)
+		}
+	}
 }

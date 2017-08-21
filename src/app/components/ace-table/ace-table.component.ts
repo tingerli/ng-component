@@ -26,18 +26,23 @@ export class AceTableComponent implements OnInit {
   @Input() widths:Array<number>=[]; //默认宽度100;
   @Input() minWidth:number = 100;//最小宽度
   @Input() tableHeight:number;   //设置了table高度，如果内容超过该高度自动滚动
-  @Input() rowNumber:number;   //一页的函数，默认10
+  @Input() rowNumber:number=10;   //一页的函数，默认10
   @Input() multipleChoice:boolean = true; //是否可以多选
   @Input() loading:boolean = false;   //加载动画
   @Input() dataInf:DataInfo = {     //数据的相关信息
-    page:1
+    page:1,
+    totalPage:1,
+    total:0,
+    startId:0,
+    endId:0
   };
   @Input() modalState:ModalState = { //modal框的设置
     show:false
   };
 
   @Output() onSelect = new EventEmitter();  //选中了某一行触发的事件
-  @Output() onChangePageNum = new EventEmitter();  //改变了每页行数的事件
+  @Output() onChangeRows = new EventEmitter();  //改变了每页行数的事件
+  @Output() onChangePage = new EventEmitter();  //翻页
   
 
   private wrapEle:any;       //容器
@@ -91,7 +96,6 @@ export class AceTableComponent implements OnInit {
       //绑定事件
       let timeout;
       this.windowResize = function(){
-        console.log('resize');
           clearTimeout(timeout);
           setTimeout(()=>{
             this.zone.run(() => {
@@ -261,12 +265,6 @@ export class AceTableComponent implements OnInit {
 
   //拖动横向滚动条
   tableScroll(e:any){
-    // if(this.movedCol){
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    //   console.log('阻止默认行为');
-    //   return
-    // }
     if(e.target.scrollLeft!=-this.thOffsetLeft){
       this.thOffsetLeft = -e.target.scrollLeft;
     }
@@ -374,6 +372,43 @@ export class AceTableComponent implements OnInit {
   
   //改变每页行数
   onPageNumerChanged(e:any){
-    this.onChangePageNum.emit(e.target.value);
+    this.onChangeRows.emit(e.target.value);
   }
+
+  //翻页 
+  onToPage(page:any){
+    if(page==1){
+      if(this.dataInf.page!=1) this.onChangePage.emit(page);
+    }else if(page==this.dataInf.totalPage){
+      if(this.dataInf.page!=this.dataInf.totalPage) this.onChangePage.emit(page);
+    }else if(page>1 && page<this.dataInf.totalPage){
+        this.onChangePage.emit(page)
+    }
+  }
+  
+  //鼠标变形
+  onCheckChangePageAU(order:string){
+    //首页
+    switch(order){
+      case "first":
+      if(this.dataInf.page==1){
+        return {disable:true}
+      }  
+      break;
+      case "pre":
+      if(this.dataInf.page-1<=0){
+        return {disable:true}
+      };
+      break;
+      case "last":
+      if(this.dataInf.page>=this.dataInf.totalPage){
+        return {disable:true}
+      };break;
+      case "next":if(this.dataInf.page+1>this.dataInf.totalPage){
+        return {disable:true}
+      };break;
+    }
+  }
+
+
 }
