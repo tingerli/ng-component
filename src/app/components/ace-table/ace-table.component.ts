@@ -384,7 +384,6 @@ export class AceTableComponent implements OnInit {
 
   //翻页 
   onToPage(page:any){
-    console.log('page',page);
     if(page==1){
       if(this.dataInf.page!=1){
         this.onChangePage.emit(page);

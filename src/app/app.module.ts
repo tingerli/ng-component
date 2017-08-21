@@ -32,6 +32,10 @@ const ansyncRoutes:Routes = [
   {
     path:'table',
     loadChildren:'./table-page/table-page.module#TablePageModule',
+  },
+  {
+    path:'modal',
+    loadChildren:'./modal-page/modal-page.module#ModalPageModule',
   }
 ]
 
