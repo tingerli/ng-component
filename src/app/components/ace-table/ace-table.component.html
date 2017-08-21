@@ -83,12 +83,15 @@
           <span>
             第
           </span>
-          <input type="text"  [(ngModel)]='dataInf.page'>
+          <div class='text-area-view'>
+            <input type="text" [(ngModel)]='inputValue' (change)='onCheckInputValue($event)' (blur)='onInputBlur()'>
+            <i (click)='onInputPageNum()' [ngStyle]='inputTextSty'>{{dataInf.page}}</i>
+          </div>
           <span>
             共 {{dataInf.totalPage?dataInf.totalPage:"X"}}
           </span>
         </li>
-        <li class='icon-btn toLeft' (click)='onToPage(dataInf.page+1)'  [ngClass]='onCheckChangePageAU("next")'>
+        <li class='icon-btn toLeft' (click)='onToPage(dataInf.page-0+1)'  [ngClass]='onCheckChangePageAU("next")'>
           <span class='ui-icon ace-icon fa fa-angle-right bigger-140'></span>
         </li>
         <li class='icon-btn toLeft' (click)='onToPage(dataInf.totalPage)' [ngClass]='onCheckChangePageAU("last")'>
@@ -109,7 +112,8 @@
     <!--提示框  -->
     <div class="ace-table-modal" *ngIf='modalState.show'>
       <i class="fa fa-info-circle"></i>
-      初次打开页面不加载数据，请组合条件进行搜索数据...
+      {{modalState.text||"初次打开页面不加载数据，请组合条件进行搜索数据..."}}
+      
     </div>
   </div>
 </div>

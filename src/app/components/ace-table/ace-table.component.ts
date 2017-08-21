@@ -66,6 +66,11 @@ export class AceTableComponent implements OnInit {
   private selectAll:boolean=false;   //选中的行
   private windowResize:any;     //window.onresize 绑定的函数
   private mouseUpFunction:any;     //window.mouseup 绑定的函数
+  private inPutEle:any;      //底部页数输入框
+  private inputValue:any = 1;     //底部页数输入框 输入的值
+  private inputTextSty:object = {  //输入框样式
+    "z-index":5
+  };
   constructor(private el:ElementRef,
     private zone:NgZone,
   ) { }
@@ -74,6 +79,7 @@ export class AceTableComponent implements OnInit {
     setTimeout(()=>{
       this.tableResize();
     });
+    this.inputValue = this.dataInf.page;
   }
 
   ngOnInit() {
@@ -127,6 +133,7 @@ export class AceTableComponent implements OnInit {
     this.contentEle = (<any>$(this.el.nativeElement)).find('.ace-table-list');
     this.moveBlock = (<any>$(this.el.nativeElement)).find('.ace-move-block');
     this.lineEle = (<any>$(this.el.nativeElement)).find('.ace-move-line');
+    this.inPutEle = (<any>$(this.el.nativeElement)).find('.text-area-view').find('input');
   }
   
   //计算没设置固定宽度td的宽度
@@ -377,8 +384,11 @@ export class AceTableComponent implements OnInit {
 
   //翻页 
   onToPage(page:any){
+    console.log('page',page);
     if(page==1){
-      if(this.dataInf.page!=1) this.onChangePage.emit(page);
+      if(this.dataInf.page!=1){
+        this.onChangePage.emit(page);
+      }
     }else if(page==this.dataInf.totalPage){
       if(this.dataInf.page!=this.dataInf.totalPage) this.onChangePage.emit(page);
     }else if(page>1 && page<this.dataInf.totalPage){
@@ -386,8 +396,53 @@ export class AceTableComponent implements OnInit {
     }
   }
   
+  //键盘输入 页数
+  onInputPageNum(){ 
+    this.inputTextSty["z-index"] = -1;
+    Promise.resolve().then(()=>{
+      this.inPutEle.focus();
+    })
+  }
+  //检查输入的值
+  onCheckInputValue(e:any){
+    if(this.modalState.show){
+      e.preventDefault();
+      return
+    }
+    var value = e.target.value;
+    var pro = new Promise(function(resolve,reject){
+      resolve();
+    });
+
+    pro.then(()=>{
+      if(/^[0-9]+$/.test(value)==false){
+        throw new Error('输入的值无效')
+      }
+    }).then(()=>{
+      if(value>=1 && value <=this.dataInf.totalPage){
+        this.inPutEle.blur();
+        this.onToPage(value);
+        this.inputTextSty["z-index"] = 5;
+      }else{
+         throw new Error('超出了页数范围')
+      }
+    }).catch(err=>{
+      this.modalState.show = true;
+       this.modalState.text = err;
+       setTimeout(()=>{
+         this.inputValue = this.dataInf.page;
+         this.modalState.show = false
+       },1500)
+    })
+  }
+  
+  //输入框失去焦点
+  onInputBlur(){
+    this.inputTextSty["z-index"] = 5;
+  }
   //鼠标变形
-  onCheckChangePageAU(order:string){
+  onCheckChangePageAU(order:string|any){
+
     //首页
     switch(order){
       case "first":
@@ -404,7 +459,7 @@ export class AceTableComponent implements OnInit {
       if(this.dataInf.page>=this.dataInf.totalPage){
         return {disable:true}
       };break;
-      case "next":if(this.dataInf.page+1>this.dataInf.totalPage){
+      case "next":if(this.dataInf.page-0+1>this.dataInf.totalPage){
         return {disable:true}
       };break;
     }
