@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms'
 import {Routes,RouterModule} from '@angular/router'
 import { AppComponent } from './app.component';
 import {HomeComponent} from './home/home.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as $ from 'jquery';
 //router
 const routes:Routes = [
@@ -43,6 +44,7 @@ const ansyncRoutes:Routes = [
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     RouterModule.forChild(ansyncRoutes),

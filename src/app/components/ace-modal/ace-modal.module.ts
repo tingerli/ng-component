@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AceModalComponent} from './ace-modal.component'
+import {AceBtnModule} from '@ace/ace-btn/button.module'
+
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    AceBtnModule,
   ],
   declarations: [AceModalComponent],
   exports:[AceModalComponent]

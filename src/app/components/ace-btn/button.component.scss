@@ -1,0 +1,9 @@
+.btn:focus{
+  outline: 0;
+}
+
+.btn:active {
+  top:0;
+  left:1px;
+  outline-color: transparent!important;
+}

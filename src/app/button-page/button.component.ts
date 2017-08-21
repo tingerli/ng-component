@@ -39,6 +39,12 @@ export class ButtonComponent implements OnInit {
       type:'function',
       default:' - '
     },
+    {
+      name:'text',
+      text:'按钮的文字',
+      type:'string',
+      default:' - '
+    },
   ];
   constructor() { }
 
