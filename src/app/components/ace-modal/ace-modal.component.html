@@ -1,7 +1,6 @@
 <div class='ace-modal-root' >
-  <div class='ace-modal-mask'  [@maskAnimate]='eleState'></div> 
-  <!-- <div class='ace-modal-wrap' > -->
-  <div class='ace-modal-wrap' [@slide]='eleState'> 
+  <div class='ace-modal-mask'  [@maskAnimate]="animate"></div> 
+  <div class='ace-modal-wrap'  [@slide]="animate"> 
     <div class='ace-modal' >
       <div class='ace-modal-content'>
         <!--关闭按钮  -->
@@ -15,26 +14,16 @@
 
         <!-- body  -->
         <div class="ace-modal-body">
-          <p>1aaaaa</p>
-          <p>2asd</p>
-          <p>33asd</p>
+          <ng-content></ng-content>
         </div>
         <!-- footer  -->
         <div class="ace-modal-footer">
-          <ace-btn [ngStyle]='{marginRight:"5px"}' [text]='"取消"' [size]='"small"'></ace-btn>
-          <ace-btn [type]='"primary"' [text]='"确定"' [size]='"small"'></ace-btn>
+          <ace-btn [ngStyle]='{marginRight:"5px"}' [text]='"取消"' [size]='"small"' (onClick)="onClose()"></ace-btn>
+          <ace-btn [type]='"primary"' [text]='"确定"' [size]='"small"'  (onClick)='onClickSureBtn()'></ace-btn>
         </div>
+
       </div>
     </div>
   </div> 
-
-
 </div>
 
-<button (click)='openModal()' [ngStyle]="{'z-index':10000,'position':'relative'}">show</button>
-<!-- <div [@visibilityChanged]="state">
-  <ng-content></ng-content>
-  <p>Can you see me? I should fade in or out...</p>
-</div>
-
-<button (click)='animate()'>{{btn}}</button> -->

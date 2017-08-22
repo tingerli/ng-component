@@ -1,2 +1,37 @@
+<div id='button' class='page-content'>
+  <h3>
+    Button <small>按钮 ace-btn</small>
+  </h3>
+  <p>使用 import AceBtnModule</p>
+  <h5 class="text-warning">
+    属性
+  </h5>
+  <table class='table-striped table-bordered table'>
+    <tr>
+      <th *ngFor='let th of thead'>{{th}}</th>
+    </tr>
+    <tr *ngFor='let item of tableValue'>
+      <td *ngFor='let key of getKeys(item)'>
+        <p [innerHTML]="key"></p>
+      </td>
+    </tr>
+  </table>
+  <h5 class="text-warning">
+    事件
+  </h5>
+  <table class='table-striped table-bordered table'>
+    <tr>
+      <th *ngFor='let th of eventHeader'>{{th}}</th>
+    </tr>
+    <tr *ngFor='let item of eventValue'>
+      <td *ngFor='let key of getEventKeys(item)'>
+        <p [innerHTML]="key"></p>
+      </td>
+    </tr>
+  </table>
+</div>
+<ace-modal [state]='modalState'>
+  <p>我是Modal</p>
+  <p>我是自定义内容</p>
+</ace-modal>
 
-<ace-modal></ace-modal>
