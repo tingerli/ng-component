@@ -24,6 +24,7 @@
     "@swimlane/ngx-datatable": "^10.0.5",
     "@types/jquery": "^3.2.11",
     "core-js": "^2.4.1",
+    "highcharts": "^v5.0.14",
     "ng-zorro-antd": "^0.5.0-rc.0",
     "rxjs": "^5.4.1",
     "zone.js": "^0.8.14"

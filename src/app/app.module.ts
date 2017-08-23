@@ -37,6 +37,10 @@ const ansyncRoutes:Routes = [
   {
     path:'modal',
     loadChildren:'./modal-page/modal-page.module#ModalPageModule',
+  },
+  {
+    path:'charts',
+    loadChildren:'./charts-page/charts-page.module#ChartsPageModule',
   }
 ]
 

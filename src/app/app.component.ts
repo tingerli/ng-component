@@ -26,6 +26,11 @@ const sideBarSetting:Setting[] = [
     path:'/modal',
     iconClass:'menu-icon fa fa-dribbble',
     text:'对话框'
+  },
+  {
+    path:'/charts',
+    iconClass:'menu-icon fa fa-bar-chart-o',
+    text:'图表'
   }
 ]
 
