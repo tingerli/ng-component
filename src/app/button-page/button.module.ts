@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Routes,RouterModule} from '@angular/router'
-import {AceBtnModule} from '@ace/ace-btn/button.module'
+import {AceBtnModule} from '@ace/ace-btn/ace-btn.module'
 import {ButtonComponent } from './button.component'
 const routes:Routes = [
   {

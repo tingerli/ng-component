@@ -1,2 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+.block {
+  margin:5px 0 50px;
+  border:1px solid #aaa;
+  border-radius: 10px;
+  padding: 20px;
+}

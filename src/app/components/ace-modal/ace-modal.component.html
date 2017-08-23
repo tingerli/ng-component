@@ -1,29 +1,32 @@
 <div class='ace-modal-root' >
-  <div class='ace-modal-mask'  [@maskAnimate]="animate"></div> 
-  <div class='ace-modal-wrap'  [@slide]="animate"> 
-    <div class='ace-modal' >
+  <div class='ace-modal-mask' (click)='onClose()'  [@maskAnimate]="animate" ></div> 
+  <div class='ace-modal-wrap'  [@slide]="animate" (@slide.start)='animateStart()' 
+  (@slide.done)='animateDone()'
+  > 
+    <div class='ace-modal' [ngStyle]="modalSty()" >
       <div class='ace-modal-content'>
         <!--关闭按钮  -->
         <button class="ace-modal-close"  (click)='onClose()'>
           <i class='fa fa-close fa-lg'></i>
         </button>
         <!-- header  -->
-        <div class="ace-modal-header">
-           Modal 
+        <div class="ace-modal-header" [innerHTML]='title'>
+           {{title}}
         </div>
 
         <!-- body  -->
-        <div class="ace-modal-body">
+        <div class="ace-modal-body" [ngStyle]="getBodySty()">
           <ng-content></ng-content>
         </div>
         <!-- footer  -->
         <div class="ace-modal-footer">
-          <ace-btn [ngStyle]='{marginRight:"5px"}' [text]='"取消"' [size]='"small"' (onClick)="onClose()"></ace-btn>
-          <ace-btn [type]='"primary"' [text]='"确定"' [size]='"small"'  (onClick)='onClickSureBtn()'></ace-btn>
+          <ace-btn [ngStyle]='{marginRight:"5px"}' [text]='cancelText' [size]='"small"' (onClick)="onClose()"></ace-btn>
+          <ace-btn [type]='"primary"' [text]='sureText' [size]='"small"'  (onClick)='onClickSureBtn()'></ace-btn>
         </div>
 
       </div>
     </div>
   </div> 
 </div>
+
 

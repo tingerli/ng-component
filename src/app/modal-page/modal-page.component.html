@@ -1,6 +1,6 @@
 <div id='button' class='page-content'>
   <h3>
-    Button <small>按钮 ace-btn</small>
+    Button <small>按钮 ace-btn</small>   <span class='text-danger'>一个功能模块只能引入一个</span>
   </h3>
   <p>使用 import AceBtnModule</p>
   <h5 class="text-warning">
@@ -16,6 +16,7 @@
       </td>
     </tr>
   </table>
+  
   <h5 class="text-warning">
     事件
   </h5>
@@ -29,9 +30,84 @@
       </td>
     </tr>
   </table>
+
+  <div class='block'>
+    <h5 class="text-warning">
+      更改标题  Demo1
+    </h5>
+    <form >
+      <div class="form-group">
+        <label for="exampleInputEmail1">自定义标题</label>
+        <input type="email" class="form-control"  placeholder="输入" [(ngModel)]='demo1' name='demo1'>
+        <ace-btn [ngStyle]="{'margin-top':'10px','display':'inline-block'}" (onClick)='onclick(1)' [text]="btnSetting.text" [size]='btnSetting.size'  [type]='btnSetting.type'
+        ></ace-btn>
+      </div>
+      
+    </form>
+  </div>
+
+  <div class='block'>
+    <h5 class="text-warning">
+        更改按钮文字  Demo2
+    </h5>
+    <form >
+      <div class="form-group">
+        <label for="exampleInputEmail1">确定按钮</label>
+        <input type="email" class="form-control"  placeholder="确定按钮" [(ngModel)]='demo2' name='sure'>
+        <label for="exampleInputEmail1">取消按钮</label>
+        <input type="email" class="form-control"  placeholder="取消按钮" [(ngModel)]='demo3' name='sure'>
+        <ace-btn [ngStyle]="{'margin-top':'10px','display':'inline-block'}" (onClick)='onclick(2)' [text]="btnSetting.text" [size]='btnSetting.size'  [type]='btnSetting.type'
+        ></ace-btn>
+      </div> 
+    </form>
+  </div>
+
+  <div class='block'>
+  <h5 class="text-warning">
+      自定义body 内容  Demo3
+  </h5>
+  <form >
+    <div class="form-group">
+      <label for="exampleInputEmail1">输入html代码</label>
+      <input type="email" class="form-control"  placeholder="html代码" [(ngModel)]='demo4' name='html'>
+
+      <ace-btn [ngStyle]="{'margin-top':'10px','display':'inline-block'}" (onClick)='onclick(3)' [text]="btnSetting.text" [size]='btnSetting.size'  [type]='btnSetting.type'
+      ></ace-btn>
+    </div> 
+  </form>
+  </div>
+
+  <div class="block">
+    <h5 class="text-warning">
+        超长的body 内容  Demo4
+    </h5>
+
+    <ace-btn [ngStyle]="{'margin-top':'10px','display':'inline-block'}" (onClick)='onclick(4)' [text]="btnSetting.text" [size]='btnSetting.size'  [type]='btnSetting.type'
+    ></ace-btn>
+  </div>
+
+  <div class="block">
+    <h5 class="text-warning">
+        自定义宽高  Demo5
+    </h5>
+    <form class='form-inline '>
+      <div class="form-group">
+        <label for="exampleInputEmail1">最大高度：</label>
+        <input type="email" class="form-control"  placeholder="最大高度" [(ngModel)]='demo5' name='height'>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">固定宽度：</label>
+        <input type="email" class="form-control"  placeholder="固定宽度" [(ngModel)]='demo6' name='width'>
+      </div>
+    </form>
+    <ace-btn [ngStyle]="{'margin-top':'10px','display':'inline-block'}" (onClick)='onclick(5)' [text]="btnSetting.text" [size]='btnSetting.size'  [type]='btnSetting.type'
+    ></ace-btn>
+  </div>
+
 </div>
-<ace-modal [state]='modalState'>
-  <p>我是Modal</p>
-  <p>我是自定义内容</p>
+<ace-modal [state]='modalState' [maxHeight]='demo5' [width]='demo6'>
+  <div [innerHTML] = 'modalState.innnerHtml' >
+  </div>
 </ace-modal>
+
 

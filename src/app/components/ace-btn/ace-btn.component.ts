@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation, Output, Input, EventEmitter } fro
 
 @Component({
   selector: 'ace-btn',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
+  templateUrl: './ace-btn.component.html',
+  styleUrls: ['./ace-btn.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ButtonComponent implements OnInit {

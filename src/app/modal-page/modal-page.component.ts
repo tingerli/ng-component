@@ -1,5 +1,17 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+var initState = {
+  show:false,
+  title:'消息框',
+  enSureBtnText:"确定",
+  cancelBtnText:"取消",
+  innnerHtml:`
+    <div>
+      欢迎使用ace-modal
+    </div>
+  `
+};
+
 @Component({
   selector: 'app-modal-page',
   templateUrl: './modal-page.component.html',
@@ -8,12 +20,35 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class ModalPageComponent implements OnInit {
   private modalState={
+    show:false,
+    title:'',
+    enSureBtnText:"",
+    cancelBtnText:"",
+    innnerHtml:`
+      <div>
+        欢迎使用ace-modal
+      </div>
+    `
+  };
+  private modalState2 = {
     show:false
   };
+  private btnSetting = {
+    text:"弹出",
+    type:"info",
+    size:"small"
+  };
 
+ private demo1:any='';  //demo1 input value
+ private demo2:any='';  //demo2 input value
+ private demo3:any='';  //demo3 input value
+ private demo4:any='';  //demo4 input value
+ private demo5:any='';  //demo4 input value
+ private demo6:any='';  //demo4 input value
   constructor() { }
 
   ngOnInit() {
+    
   }
   
   openModal(){
@@ -55,7 +90,35 @@ export class ModalPageComponent implements OnInit {
     return [item.name, item.text, item.cb]
   }
   
-  onclick(val) {
-    console.log(val);
+  onclick(idx:number) {
+    this.modalState = JSON.parse(JSON.stringify(initState));
+    switch(idx) {
+      case 1:
+      this.modalState.title = this.demo1?this.demo1:"消息框";
+      break;
+      case 2:
+      this.modalState.enSureBtnText = this.demo2?this.demo2:"确定";
+      this.modalState.cancelBtnText = this.demo3?this.demo3:"取消";
+      break;
+      case 3:
+      this.modalState.innnerHtml = this.demo4?this.demo4:this.modalState.innnerHtml;
+      break;
+      case 4:
+      var dom="";
+      for(var i=0;i<25;i++){
+        dom = dom+"<p>"+i+"</p>";
+      }
+      this.modalState.innnerHtml = dom;
+      break;
+    }
+    
+    this.modalState.show = true;
+
+    
+  };
+
+  onclickScroll(){
+    this.modalState2.show = true;
   }
+
 }

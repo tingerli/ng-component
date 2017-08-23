@@ -33,18 +33,19 @@ export class ButtonComponent implements OnInit {
       type:'string',
       default:'default '
     },
-     {
-      name:'onClick',
-      text:'click 事件的 handler',
-      type:'function',
-      default:' - '
-    },
     {
       name:'text',
       text:'按钮的文字',
       type:'string',
       default:' - '
     },
+    {
+      name:'onClick',
+      text:'click 事件的 handler',
+      type:'function',
+      default:' - '
+    },
+    
   ];
   constructor() { }
 
