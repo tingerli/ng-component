@@ -1,8 +1,8 @@
 <div id='button' class='page-content'>
   <h3>
-    Button <small>按钮 ace-btn</small>   <span class='text-danger'>一个功能模块只能引入一个</span>
+    Modal <small style="margin-right:10px">模态窗口 </small><small>ace-modal</small>   <span class='text-danger' style="font-size:13px">一个功能模块只能引入一个</span>
   </h3>
-  <p>使用 import AceBtnModule</p>
+  <p>使用 import AceModalModule</p>
   <h5 class="text-warning">
     属性
   </h5>
@@ -50,16 +50,17 @@
     <h5 class="text-warning">
         更改按钮文字  Demo2
     </h5>
-    <form >
+    <form class='form-inline'>
       <div class="form-group">
         <label for="exampleInputEmail1">确定按钮</label>
         <input type="email" class="form-control"  placeholder="确定按钮" [(ngModel)]='demo2' name='sure'>
         <label for="exampleInputEmail1">取消按钮</label>
         <input type="email" class="form-control"  placeholder="取消按钮" [(ngModel)]='demo3' name='sure'>
-        <ace-btn [ngStyle]="{'margin-top':'10px','display':'inline-block'}" (onClick)='onclick(2)' [text]="btnSetting.text" [size]='btnSetting.size'  [type]='btnSetting.type'
-        ></ace-btn>
+        
       </div> 
     </form>
+    <ace-btn [ngStyle]="{'margin-top':'10px','display':'inline-block'}" (onClick)='onclick(2)' [text]="btnSetting.text" [size]='btnSetting.size'  [type]='btnSetting.type'
+        ></ace-btn>
   </div>
 
   <div class='block'>

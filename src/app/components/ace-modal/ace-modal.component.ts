@@ -116,15 +116,15 @@ export class AceModalComponent implements OnInit {
     let num;
 
     if(this.maxHeight){
-      if(typeof this.maxHeight == "number"){
-        num = this.maxHeight
+      if(this.maxHeight.indexOf("%")==-1){
+        num = this.maxHeight-0
       }else{
-        num = this.windowH*(parseInt(this.maxHeight)/100)
+
+        num = Math.floor(this.windowH*(parseInt(this.maxHeight)/100));
       }
     }else{
       num = this.windowH*0.8;
     }
-
 
     num = Math.floor(num);
     if(totalHeight+10<=num || this.animateState.hide==true){
@@ -161,7 +161,8 @@ export class AceModalComponent implements OnInit {
       this.animateState.show = true;
     }
   }
-
+  
+  //设置宽度
   modalSty(){
     var val = this.width;
     if(this.width.indexOf("%")>-1){

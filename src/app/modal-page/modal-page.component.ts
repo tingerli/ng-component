@@ -73,6 +73,20 @@ export class ModalPageComponent implements OnInit {
         &nbsp;&nbsp;cancelBtnText?:string; &nbsp;&nbsp;//取消按钮的文字<br>
       }`
     },
+    {
+      name:'maxHeight',
+      text:'Modal的最大高度 , 支持百分数 跟 整数',
+      type:'number | string',
+      default:` - `,
+      iterface:` - `
+    },
+    {
+      name:'width',
+      text:'Modal的固定宽度 , 支持百分数 跟 整数',
+      type:'number | string',
+      default:` - `,
+      iterface:` - `
+    },
   ];
   eventHeader = ['事件','说明',"返回值"];
   eventValue = [
@@ -104,6 +118,7 @@ export class ModalPageComponent implements OnInit {
       this.modalState.innnerHtml = this.demo4?this.demo4:this.modalState.innnerHtml;
       break;
       case 4:
+      case 5:
       var dom="";
       for(var i=0;i<25;i++){
         dom = dom+"<p>"+i+"</p>";
