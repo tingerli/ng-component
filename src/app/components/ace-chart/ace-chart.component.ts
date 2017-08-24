@@ -67,6 +67,14 @@ export class AceChartComponent implements OnInit,OnChanges {
   set normalData(val:Array<NormalData>){
     this._normalData = val;
   };
+  //饼图数据源
+  _pieData:Array<NormalData>;
+  @Input() get pieData(){
+    return this._pieData;
+  };
+  set pieData(val:Array<NormalData>){
+    this._pieData = val;
+  };
   
 
   private chart;//表格实例
@@ -104,26 +112,18 @@ export class AceChartComponent implements OnInit,OnChanges {
   initChart(){
     this.chart = new Highcharts.Chart('container', {// 图表初始化函数，其中 container 为图表的容器 div               
       chart: {
-          type: 'column'                           //指定图表的类型，默认是折线图（line）
+          type: this.type                        //指定图表的类型，默认是折线图（line）
       },
       title: {
-          text: '我的第一个图表'                 //指定图表标题
+          text: this.title               //指定图表标题
       },
-      xAxis: {
-          categories: ['苹果', '香蕉', '橙子']   //指定x轴分组
-      },
+      xAxis: this.x,
       yAxis: {
         title: {
-         text: 'hello'                 //指定y轴的标题
+         text: this.y.title                //指定y轴的标题
         },
       },
-      series: [{                                 //指定数据列
-          name: '小明',                          //数据列名
-          data: [1, 0, 4]                        //数据
-      }, {
-          name: '小红',
-          data: [3, 7, 3]
-      }]
+      series: this.type=="pie"?this._pieData:this.normalData,
     });
   
   }
