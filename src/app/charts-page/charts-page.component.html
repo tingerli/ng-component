@@ -1,9 +1,9 @@
 <div id='charts-page' class='page-content clearfix'>
   <h3>
-    Charts <small>表格 ace-charts</small>
+    Chart <small>表格 ace-chart</small>
   </h3>
   <h4>
-    安装232
+    安装
   </h4>
   <p>
     npm install highcharts --save
@@ -11,5 +11,8 @@
   <h5 class="text-warning">
     属性
   </h5>
-  <div id="container" style="min-width:800px;height:400px"></div>
+  <ace-chart [title]="charSetting.title" [type]="charSetting.type" [x]="charSetting.x"
+  [y]="charSetting.y"
+  ></ace-chart>
+
 </div>
