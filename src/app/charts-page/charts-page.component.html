@@ -11,8 +11,21 @@
   <h5 class="text-warning">
     属性
   </h5>
-  <ace-chart [title]="charSetting.title" [type]="charSetting.type" [x]="charSetting.x"
-  [y]="charSetting.y"  [normalData]='data'
-  ></ace-chart>
+  <table class='table-striped table-bordered table'>
+    <tr>
+        <th *ngFor='let i of th'>{{i}}</th>
+      </tr>
+    <tr>
+      <th *ngFor='let th of eventHeader'>{{th}}</th>
+    </tr>
+    <tr *ngFor='let item of propValue'>
+      <td *ngFor='let key of tool.getKeys(item)'>
+        <p [innerHTML]="key"></p>
+      </td>
+    </tr>
+  </table>
+
+  <ace-chart [type]="'line'" [chartSetting]='lineChartSetting'></ace-chart>
+  <ace-chart [type]="'pie'" [chartSetting]='pieChartSetting'></ace-chart>
 
 </div>

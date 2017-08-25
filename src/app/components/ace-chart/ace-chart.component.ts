@@ -1,27 +1,16 @@
 import { Component, OnInit, ViewEncapsulation, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import Highcharts from 'highcharts/highstock'
+import {LineChartConfigService} from './line-chart-config.service';
+import {PieChartConfigService} from './pie-chart-config.service';
+export * from './line-chart-config.service';
 
-//x轴接口
-interface XAxis {
-  categories:Array<number|string>;
-}
-
-//y轴接口
-interface YAxis {
-  title:string;
-};
-
-//数据源接口
-interface NormalData {
-  name:string;
-  data:Array<number>;
-}
 
 @Component({
   selector: 'ace-chart',
   templateUrl: './ace-chart.component.html',
   styleUrls: ['./ace-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers:[LineChartConfigService,PieChartConfigService]
 })
 export class AceChartComponent implements OnInit,OnChanges {
   _type:string;   //表格类型  直线图  曲线图  柱状图  饼图 
@@ -32,100 +21,135 @@ export class AceChartComponent implements OnInit,OnChanges {
     this._type = val;
   }
 
-   //标题
-  _title:string;  
-  @Input() get title(){
-    return this._title;
-  };
-  set title(val:string){
-    this._title = val;
+  //配置
+  _chartSetting;
+  @Input() get chartSetting(){
+    return this._chartSetting;
+  }
+  set chartSetting(val){
+    //判断是否有改变，如果有改变，刷新
+    this._chartSetting = val;
   };
 
-  //x轴
-  _x:XAxis;  
-  @Input() get x(){
-    return this._x;
-  };
-  set x(val:XAxis){
-    this._x = val;
-  };
   
-  //y轴
-  _y:YAxis;  
-  @Input() get y(){
-    return this._y;
-  };
-  set y(val:YAxis){
-    this._y = val;
-  };
-  
-  //普通数据源
-  _normalData:Array<NormalData>;
-  @Input() get normalData(){
-    return this._normalData;
-  };
-  set normalData(val:Array<NormalData>){
-    this._normalData = val;
-  };
-  //饼图数据源
-  _pieData:Array<NormalData>;
-  @Input() get pieData(){
-    return this._pieData;
-  };
-  set pieData(val:Array<NormalData>){
-    this._pieData = val;
-  };
-  
-
   private chart;//表格实例
+  public  id;   //id
+  charOption:any = {};//最后的配置
 
 
-  constructor() {}
+  constructor(
+    private lineService:LineChartConfigService,
+    private PieService:PieChartConfigService
+  ) {
+    var id="";
+    for(var i=0;i<10;i++){
+      id=id+Math.floor(Math.random()*10);
+    }
+    this.id = 'acechar'+id;
+  }
   ngOnChanges(){
+   
     
   }
   
-  checkData(){
-    var j = ["title","x",'y','type'];
-    for(var i=0;i<j.length;i++){
-      if(this[j[i]]==undefined ){
-        throw new Error('ace-chart component property of '+j[i]+' is undefined');
-      }
-    }
-  };
-  
+
   ngOnInit() {
-    //主要是检查几个数据是否齐全
-    //特别是饼图
-    
     Promise.resolve().then(()=>{
-      this.checkData();
-     }).then(()=>{
-       this.initChart();
-     }).catch((err)=>{
-       
-         console.error(err);
-     })
+      if(this.type=='line'){
+        this.setLineCongig();
+      }else if(this.type=='pie'){
+				this.setPieConfig();
+			}
+    }).then(()=>{
+      this.initChart();
+    })
   };
   
   //初始化图表
   initChart(){
-    this.chart = new Highcharts.Chart('container', {// 图表初始化函数，其中 container 为图表的容器 div               
+		this.charOption.credits = {
+			enabled:false
+		}
+    Promise.resolve().then(()=>{
+			this.chart = new Highcharts.Chart(this.id, this.charOption);
+		});
+  };
+
+  setPieConfig(){
+		this.PieService.check(this.chartSetting);
+    this.charOption = {
       chart: {
-          type: this.type                        //指定图表的类型，默认是折线图（line）
-      },
-      title: {
-          text: this.title               //指定图表标题
-      },
-      xAxis: this.x,
-      yAxis: {
-        title: {
-         text: this.y.title                //指定y轴的标题
-        },
-      },
-      series: this.type=="pie"?this._pieData:this.normalData,
-    });
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false
+			},
+			title: {
+					text: this.chartSetting.title
+			},
+			tooltip: {
+					headerFormat: '{series.name}<br>',
+					pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+							style: {
+									color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+							}
+						},
+						states: {
+							hover: {
+									enabled: false
+							}  
+						},
+						slicedOffset: 20,         // 突出间距
+						point: {                  // 每个扇区是数据点对象，所以事件应该写在 point 下面
+							events: {
+								// 鼠标滑过是，突出当前扇区
+								mouseOver: function() {
+										this.slice();
+								},
+								// 鼠标移出时，收回突出显示
+								mouseOut: function() {
+										this.slice();
+								},
+								// 默认是点击突出，这里屏蔽掉
+								click: function() {
+										return false;
+								}
+							}
+						}
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: this.chartSetting.hoverText,
+				data: this.chartSetting.datas
+			}]
+    }
+  };
+
+  setLineCongig(){
+    this.charOption = {};
+    var obj = this.lineService.check(this.chartSetting);
+    this.charOption.chart = {
+      type:this.type
+    };
+    this.charOption.title = {
+      text:this.chartSetting.title
+    };
+    this.charOption.xAxis = this.chartSetting.x;
+    this.charOption.yAxis = this.chartSetting.y;
+    this.charOption.series  = this.chartSetting.datas;
+  }
   
+  //重绘
+  rePaint():void{
+
   }
   
 

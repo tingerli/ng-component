@@ -62,6 +62,9 @@
     },
     "build":{
       "sourcemaps":false
+    },
+    "service": {
+      "spec": false
     }
   }
 }
