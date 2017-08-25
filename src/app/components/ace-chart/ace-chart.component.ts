@@ -59,6 +59,8 @@ export class AceChartComponent implements OnInit,OnChanges {
         this.setLineCongig();
       }else if(this.type=='pie'){
 				this.setPieConfig();
+			}if(this.type=='bar'){
+				this.setBarConfig();
 			}
     }).then(()=>{
       this.initChart();
@@ -145,7 +147,21 @@ export class AceChartComponent implements OnInit,OnChanges {
     this.charOption.xAxis = this.chartSetting.x;
     this.charOption.yAxis = this.chartSetting.y;
     this.charOption.series  = this.chartSetting.datas;
-  }
+	}
+	
+	setBarConfig(){
+		this.charOption = {};
+    var obj = this.lineService.check(this.chartSetting);
+    this.charOption.chart = {
+      type:this.type
+    };
+    this.charOption.title = {
+      text:this.chartSetting.title
+    };
+    this.charOption.xAxis = this.chartSetting.x;
+    this.charOption.yAxis = this.chartSetting.y;
+    this.charOption.series  = this.chartSetting.datas;
+	}
   
   //重绘
   rePaint():void{

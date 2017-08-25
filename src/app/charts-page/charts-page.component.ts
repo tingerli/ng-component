@@ -12,7 +12,7 @@ export class ChartsPageComponent implements OnInit {
   propValue = [
     {
       name:'type',
-      text:"表格的类型，暂时支持line(直线图)",
+      text:"表格的类型，暂时支持line(直线图), pie(饼图)， bar(柱形图)",
       type:"string",
       interface:" - ",
       default:" - "
@@ -56,10 +56,10 @@ export class ChartsPageComponent implements OnInit {
       categories:["2011",'2012','2013',2014],
     },
     datas:[
-      {
-        name:'数学',
-        data:[50,60,70,80]
-      },
+      // {
+      //   name:'数学',
+      //   data:[50,60,70,80]
+      // },
       {
         name:'英语',
         data:[150,60,40,30]
