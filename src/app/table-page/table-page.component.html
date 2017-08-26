@@ -15,7 +15,6 @@
       </td>
     </tr>
   </table>
-  <div class="block">
   <h5 class="text-warning">
     事件
   </h5>
@@ -29,7 +28,16 @@
       </td>
     </tr>
   </table>
-  </div>
+  <div class="block">
+    <h5 class="text-warning">
+      操作区域
+    </h5>
+    <ace-table [theadSource]='theadSource' [dataSource]='demo4.dataSource' [title]='demo4.title' 
+    [widths]='demo4.widths' [tableHeight]='300'  [modalState]='demo4.modalState' 
+    [dataInf]='demo4.dataInf'  [loading]='demo4.loading' operateState='true'
+    [rowNumber]='demo4.rowNumber' (onChangeRows)='changeDemo4Rows($event)'  (onChangePage)='changeDemo4Page($event)'
+    ></ace-table>
+    </div>
 
   <div class="block">
   <h5 class="text-warning">

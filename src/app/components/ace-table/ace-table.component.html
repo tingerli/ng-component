@@ -1,120 +1,133 @@
 <div class='clearfix'>
-<div class='col-xs-12 ace-table'>
-  <!-- 标题 -->
-  <div class='ace-table-title'>
-    <span>{{title}}</span>
-    <a class='arrow' (click)='close()'>
+  <div class='col-xs-12 ace-table'>
+    <!-- 标题 -->
+    <div class='ace-table-title'>
+      <span>{{title}}</span>
+      <a class='arrow' (click)='close()'>
       <span class='fa fa-arrow-up' [ngStyle]='closeIconSty()'></span>
     </a>
-  </div>
- 
-  <div class='ace-wrap' >
-     
-    <!-- thead -->
-    <div class='ace-wrap-son'>
-    <div class='ace-move-line'></div>
-    <div class='ace-table-thead' [ngStyle]='{width:wrapWidth-17+"px"}' > 
-      <table class='table table-bordered' [ngStyle]='{transform:"translateX("+thOffsetLeft+"px)"}'>
-        <!--全选按钮  -->
-        <tr>
-          <th *ngIf='multipleChoice' class='ace-checkbox'>
-            <label  >
+    </div>
+
+    <div class='ace-wrap'>
+
+      <!-- thead -->
+      <div class='ace-wrap-son'>
+        <div class='ace-move-line'></div>
+        <div class='ace-table-thead' [ngStyle]='{width:wrapWidth-17+"px"}'>
+          <table class='table table-bordered' [ngStyle]='{transform:"translateX("+thOffsetLeft+"px)"}'>
+            <!--全选按钮  -->
+            <tr>
+              <th *ngIf='multipleChoice' class='ace-checkbox'>
+                <label>
               <input id="cbxAllMain" type="checkbox" class="ace" [(ngModel)]='selectAll' (click)='onSelectedAll()'>
               <span class="lbl"></span>
             </label>
-          </th>
-          <th *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)" (mousemove)='thMoving($event,idx)'
-            (mousedown)='tdisClilked($event,idx)'>
-            <span>{{item.text}}</span>
-          </th>
-        </tr>
-      </table>
-      <div class='ace-move-block' (mousemove)='moveBlockEvent($event)'></div>
-    </div>
-    <!--   内容区  -->
-    <div class='ace-table-content' (scroll)='tableScroll($event)'>
-      <div class='ace-table-list'>
-        <table class='table table-bordered'>
-          <tr class='first-row' > <!-- 这个元素控制宽度，所有tr的宽度  -->
-            <td *ngIf='multipleChoice' style="width:50px">
-            </td>
-            <td *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)"></td>       
-          </tr>
-          <tr *ngFor='let data of dataSource.slice(0,rowNumber);let idx=index;' [ngClass]='checkRow[idx]?"ace-checked-row":""'>
-            <!--多选框  -->
-            <td *ngIf='multipleChoice' class='ace-checkbox' >
-              <label >
-                <input id="cbxAllMain" type="checkbox" class="ace" [(ngModel)]='checkRow[idx]' (click)='onCheckRow(idx)' >
-                <span class="lbl"></span>
-              </label>
-            </td>
-            <td *ngFor='let i of getKeys(data)'>
-              <span>{{i}}</span>
-            </td>
-          </tr>
-        </table>
+              </th>
+              <th *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)" (mousemove)='thMoving($event,idx)' (mousedown)='tdisClilked($event,idx)'>
+                <span>{{item.text}}</span>
+              </th>
+              <th *ngIf='operateState' class='ace-table-opera'>
+                <span>控制开关</span>
+              </th>
+            </tr>
+          </table>
+          <div class='ace-move-block' (mousemove)='moveBlockEvent($event)'></div>
+        </div>
+        <!--   内容区  -->
+        <div class='ace-table-content' (scroll)='tableScroll($event)'>
+          <div class='ace-table-list'>
+            <table class='table table-bordered'>
+              <tr class='first-row'>
+                <!-- 这个元素控制宽度，所有tr的宽度  -->
+                <td *ngIf='multipleChoice' style="width:50px">
+                </td>
+                <td *ngFor='let item of theadSource;let idx=index;' [ngStyle]="getThSty(idx)"></td>
+                <td *ngIf='operateState' class='ace-table-opera'></td>
+              </tr>
+              <tr *ngFor='let data of dataSource.slice(0,rowNumber);let idx=index;' [ngClass]='checkRow[idx]?"ace-checked-row":""'>
+                <!--多选框  -->
+                <td *ngIf='multipleChoice' class='ace-checkbox'>
+                  <label>
+                    <input id="cbxAllMain" type="checkbox" class="ace" [(ngModel)]='checkRow[idx]' (click)='onCheckRow(idx)' >
+                    <span class="lbl"></span>
+                  </label>
+                </td>
+                <td *ngFor='let i of getKeys(data)'>
+                  <span>{{i}}</span>
+                </td>
+                <td *ngIf='operateState' class='ace-table-opera' (click)='onChangeReflreshState(idx)'>
+                  <div class='ace-table-reload'>
+                      <i class='fa fa-refresh'  [ngClass]='getReflreshSty(idx)'></i>
+                      <span>{{operaRefresh&&operaRefresh[idx]?"刷新中":"刷新"}}</span>
+                  </div>
+                  <div class='ace-table-show-detail' >
+                      <i class='fa fa-angle-double-down'></i>
+                      <span>展开</span>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <!--拖动线  -->
+        </div>
       </div>
-      <!--拖动线  -->
-    </div>
-    </div>
-    <!-- 底部  -->
-    <div class='ace-table-footer' >
-      <!-- 每页显示数量 -->
-      <div class='select-page-block'>
-        <span>每页显示数量：</span>
-        <select  (change)='onPageNumerChanged($event)'>
+      <!-- 底部  -->
+      <div class='ace-table-footer'>
+        <!-- 每页显示数量 -->
+        <div class='select-page-block'>
+          <span>每页显示数量：</span>
+          <select (change)='onPageNumerChanged($event)'>
           <option value="10">10</option>
           <option value="15">15</option>
           <option value="20">20</option>
           <option value="25">25</option>
           <option value="30">30</option>
         </select>
-      </div>
-      
-      <!--翻页区  -->
-      <ul class='ace-button-area'>
-        <li class='icon-btn' (click)='onToPage(1)' [ngClass]='onCheckChangePageAU("first")'>
-          <span class='ui-icon ace-icon fa fa-angle-double-left bigger-140'></span>
-        </li>
-        <li class='icon-btn' (click)='onToPage(dataInf.page-1)' [ngClass]='onCheckChangePageAU("pre")'>
-          <span class='ui-icon ace-icon fa fa-angle-left bigger-140'></span>
-        </li>
-        <li class='text-area'>
-          <span>
+        </div>
+
+        <!--翻页区  -->
+        <ul class='ace-button-area'>
+          <li class='icon-btn' (click)='onToPage(1)' [ngClass]='onCheckChangePageAU("first")'>
+            <span class='ui-icon ace-icon fa fa-angle-double-left bigger-140'></span>
+          </li>
+          <li class='icon-btn' (click)='onToPage(dataInf.page-1)' [ngClass]='onCheckChangePageAU("pre")'>
+            <span class='ui-icon ace-icon fa fa-angle-left bigger-140'></span>
+          </li>
+          <li class='text-area'>
+            <span>
             第
           </span>
-          <div class='text-area-view'>
-            <input type="text" [(ngModel)]='inputValue' (change)='onCheckInputValue($event)' (blur)='onInputBlur()'>
-            <i (click)='onInputPageNum()' [ngStyle]='inputTextSty'>{{dataInf.page}}</i>
-          </div>
-          <span>
+            <div class='text-area-view'>
+              <input type="text" [(ngModel)]='inputValue' (change)='onCheckInputValue($event)' (blur)='onInputBlur()'>
+              <i (click)='onInputPageNum()' [ngStyle]='inputTextSty'>{{dataInf.page}}</i>
+            </div>
+            <span>
             共 {{dataInf.totalPage?dataInf.totalPage:"X"}}
           </span>
-        </li>
-        <li class='icon-btn toLeft' (click)='onToPage(dataInf.page-0+1)'  [ngClass]='onCheckChangePageAU("next")'>
-          <span class='ui-icon ace-icon fa fa-angle-right bigger-140'></span>
-        </li>
-        <li class='icon-btn toLeft' (click)='onToPage(dataInf.totalPage)' [ngClass]='onCheckChangePageAU("last")'>
-          <span class='ui-icon ace-icon fa fa-angle-double-right bigger-140'></span>
-        </li>
-      </ul>
+          </li>
+          <li class='icon-btn toLeft' (click)='onToPage(dataInf.page-0+1)' [ngClass]='onCheckChangePageAU("next")'>
+            <span class='ui-icon ace-icon fa fa-angle-right bigger-140'></span>
+          </li>
+          <li class='icon-btn toLeft' (click)='onToPage(dataInf.totalPage)' [ngClass]='onCheckChangePageAU("last")'>
+            <span class='ui-icon ace-icon fa fa-angle-double-right bigger-140'></span>
+          </li>
+        </ul>
 
-      <!--显示区  -->
-      <div class='ace-table-footer-text'>
-          <span >当前 {{(dataInf.startId||dataInf.startId==0)?dataInf.startId:"X"}} - {{(dataInf.endId||dataInf.endId==0)?dataInf.endId:"X"}} 行 ，
+        <!--显示区  -->
+        <div class='ace-table-footer-text'>
+          <span>当前 {{(dataInf.startId||dataInf.startId==0)?dataInf.startId:"X"}} - {{(dataInf.endId||dataInf.endId==0)?dataInf.endId:"X"}} 行 ，
             共 {{(dataInf.total||dataInf.total==0)?dataInf.total:"X"}} 行 </span>
+        </div>
+      </div>
+      <!--加载动画  -->
+      <div class='ace-table-loadding' *ngIf='loading'>
+        <i class='ace-icon'></i>
+      </div>
+      <!--提示框  -->
+      <div class="ace-table-modal" *ngIf='modalState.show'>
+        <i class="fa fa-info-circle"></i> {{modalState.text||"初次打开页面不加载数据，请组合条件进行搜索数据..."}}
+
       </div>
     </div>
-     <!--加载动画  -->
-    <div class='ace-table-loadding' *ngIf='loading'>
-      <i class='ace-icon'></i>
-    </div>
-    <!--提示框  -->
-    <div class="ace-table-modal" *ngIf='modalState.show'>
-      <i class="fa fa-info-circle"></i>
-      {{modalState.text||"初次打开页面不加载数据，请组合条件进行搜索数据..."}}
-      
-    </div>
   </div>
-</div>
 </div>

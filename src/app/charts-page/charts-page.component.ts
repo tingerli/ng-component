@@ -35,7 +35,7 @@ export class ChartsPageComponent implements OnInit {
        &nbsp;&nbsp; x:{<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text?:string;  //x轴名称<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;categories?:Array<string|number>|null;  //默认是null，如果添加了数组，就是区域<br>
-       };<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
         &nbsp;&nbsp; datas:Array<LineData>:{<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name:string;         //对象的名字<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data:Array<number>;  //数据的集合<br>

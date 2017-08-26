@@ -20,7 +20,7 @@ const sideBarSetting:Setting[] = [
   {
     path:'/table',
     iconClass:'menu-icon fa fa-table',
-    text:'表单'
+    text:'表格'
   },
   {
     path:'/modal',
