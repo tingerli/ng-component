@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export interface LineData {
   name:string;         //对象的名字
+  hoverText?:string;
   data:Array<number>;  //数据的集合
 }
 
