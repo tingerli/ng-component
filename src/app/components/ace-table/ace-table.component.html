@@ -55,12 +55,12 @@
                 <td *ngFor='let i of getKeys(data)'>
                   <span>{{i}}</span>
                 </td>
-                <td *ngIf='operateState' class='ace-table-opera' (click)='onChangeReflreshState(idx)'>
-                  <div class='ace-table-reload'>
+                <td *ngIf='operateState' class='ace-table-opera' >
+                  <div class='ace-table-reload' (click)='onChangeReflreshState(idx)'>
                       <i class='fa fa-refresh'  [ngClass]='getReflreshSty(idx)'></i>
                       <span>{{operaRefresh&&operaRefresh[idx]?"刷新中":"刷新"}}</span>
                   </div>
-                  <div class='ace-table-show-detail' >
+                  <div class='ace-table-show-detail' (click)='onShowDetail($event,idx)'>
                       <i class='fa fa-angle-double-down'></i>
                       <span>展开</span>
                   </div>

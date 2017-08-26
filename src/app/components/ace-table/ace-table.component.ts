@@ -13,6 +13,11 @@ interface ModalState {
   text?: string;
 }
 
+interface ShowTr {
+  el:any;
+  show:boolean;
+}
+
 @Component({
   selector: 'ace-table',
   templateUrl: './ace-table.component.html',
@@ -21,7 +26,15 @@ interface ModalState {
 })
 export class AceTableComponent implements OnInit {
   @Input() title: string = '表格';      //表格标题
-  @Input() dataSource: Array<object> //遍历的数据
+  _dataSource:Array<object>;//遍历的数据
+  @Input() set dataSource(val:Array<object>){
+    this._dataSource = val;
+    this.init();
+  }
+  get dataSource(){
+    return this._dataSource
+  }
+
   @Input() theadSource: Array<object> //表头数据
   @Input() widths: Array<number> = []; //默认宽度100;
   @Input() minWidth: number = 100;//最小宽度
@@ -45,7 +58,7 @@ export class AceTableComponent implements OnInit {
   @Output() onSelect = new EventEmitter();  //选中了某一行触发的事件
   @Output() onChangeRows = new EventEmitter();  //改变了每页行数的事件
   @Output() onChangePage = new EventEmitter();  //翻页
-
+  @Output() onReflresh = new EventEmitter();   //刷新单项
 
   private wrapEle: any;       //容器
   private tableEle: any;      //表格区
@@ -73,7 +86,8 @@ export class AceTableComponent implements OnInit {
   private inputTextSty: object = {  //输入框样式
     "z-index": 5
   };
-  private operaRefresh: Array<boolean>;
+  private operaRefresh: Array<boolean>;  //正在刷新的行的集合
+  private operaShowDetail: Array<ShowTr> = [];  //正在展开的行的集合
   constructor(private el: ElementRef,
     private zone: NgZone,
   ) { }
@@ -93,18 +107,13 @@ export class AceTableComponent implements OnInit {
     Promise.resolve().then(() => {
       this.init();
       this.getElementWidth();
-    
+
       if ("colsWidth" in this) {
         this.setUserSettingWidth() ? this.styInit() : "";
       } else {
         this.styInit()
       }
-      if(this.operateState){
-        this.operaRefresh = [];
-        for(let i=0;i<this.dataSource.length;i++){
-          this.operaRefresh.push(false);
-        }
-      }
+
     }).then(() => {
       //绑定事件
       let timeout;
@@ -141,6 +150,12 @@ export class AceTableComponent implements OnInit {
     this.moveBlock = (<any>$(this.el.nativeElement)).find('.ace-move-block');
     this.lineEle = (<any>$(this.el.nativeElement)).find('.ace-move-line');
     this.inPutEle = (<any>$(this.el.nativeElement)).find('.text-area-view').find('input');
+    if (this.operateState) {
+      this.operaRefresh = [];
+      for (let i = 0; i < this.dataSource.length; i++) {
+        this.operaRefresh.push(false);
+      }
+    }
   }
 
   //计算没设置固定宽度td的宽度
@@ -471,17 +486,44 @@ export class AceTableComponent implements OnInit {
       }; break;
     }
   }
-  
+
   //设置刷新动画
-  getReflreshSty(idx:number):string{
-    if(!this.operaRefresh) return ""
-    return this.operaRefresh[idx]?"fa-spin":""
+  getReflreshSty(idx: number): string {
+    if (!this.operaRefresh) return ""
+    return this.operaRefresh[idx] ? "fa-spin" : ""
   }
 
   //改变刷新动画的状态
-  onChangeReflreshState(idx:number):void {
-
+  onChangeReflreshState(idx: number): void {
     this.operaRefresh[idx] = !this.operaRefresh[idx];
+    this.onReflresh.emit({
+      state:this.operaRefresh[idx],
+      data:this.dataSource[idx]
+    });
+   
+  }
+  
+  //展示detail
+  onShowDetail(e:any,idx:number):void {
+    if(this.operaShowDetail[idx]&& this.operaShowDetail[idx].show){  //删除
+      
+      $(this.operaShowDetail[idx].el).remove();
+      this.operaShowDetail[idx].show = false;
+    }else {
+      var curTr = $(e.target).closest('tr');
+      var ele = $(`
+        <tr>
+         <td colspan="${this.dataSource.length+(this.multipleChoice?1:0)+(this.operateState?1:0)}">
+         ${(<any>this.dataSource[idx]).detail}
+         </td>
+        </tr>  
+      `);
+      this.operaShowDetail[idx] = {
+        el:ele[0],
+        show:true
+      };
+      ele.insertAfter(curTr);
+    }
   }
 
 }
