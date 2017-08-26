@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 export interface LineData {
   name:string;         //对象的名字
-  hoverText?:string;
+  hoverText?:string;   //悬浮时候的文字
+  unit?:string;   //单位
   data:Array<number>;  //数据的集合
 }
 

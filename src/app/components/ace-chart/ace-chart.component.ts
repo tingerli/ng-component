@@ -165,6 +165,7 @@ export class AceChartComponent implements OnInit, OnChanges {
 			text: this.chartSetting.title
 		};
 		this.charOption.xAxis = JSON.parse(JSON.stringify(this.chartSetting.x));
+
 		this.charOption.yAxis = JSON.parse(JSON.stringify(this.chartSetting.y));
 		this.charOption.yAxis.title = {
 			text: this.chartSetting.y.title,
@@ -185,15 +186,17 @@ export class AceChartComponent implements OnInit, OnChanges {
 				}
 			}
 		};
-		this.charOption.series = this.chartSetting.datas;
+		this.charOption.series = JSON.parse(JSON.stringify(this.chartSetting.datas));
+
+
+
 		this.charOption.tooltip = {
-			// shared: true,
 			useHTML: true,
 			headerFormat: '<small>' + (this.chartSetting.hoverText || "{point.key}") + '</small><table>',
 			pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
-			'<td style="text-align: right"><b>{point.y}</b></td></tr>',
+			'<td style="text-align: right"><b style="margin-right: 5px">{point.y}</b><b>'+(this.chartSetting.unit||"")+'</b></td></tr>',
 			footerFormat: '</table>',
-			// valueDecimals: 2
+			// valueDecimals: 2  //保留的小数
 		};
 	};
 
