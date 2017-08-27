@@ -26,6 +26,7 @@
     "core-js": "^2.4.1",
     "highcharts": "^v5.0.14",
     "ng-zorro-antd": "^0.5.0-rc.0",
+    "ng2-date-picker": "^2.3.1",
     "rxjs": "^5.4.1",
     "zone.js": "^0.8.14"
   },

@@ -1,0 +1,12 @@
+<div>
+  <dp-date-picker id="datePicker" name="datePicker" #datePicker #datePickerModel="ngModel" [(ngModel)]="date" (ngModelChange)="log($event)"
+    [mode]="'day'" [disabled]="disabled" [minDate]="validationMinDate" [maxDate]="validationMaxDate" [required]="required"
+    [placeholder]="placeholder" [config]="config" theme="dp-material">
+
+  </dp-date-picker>
+  <dp-time-select name="timeInline" #timeInline="ngModel" [(ngModel)]="date" (ngModelChange)="log($event)" [minDate]="validationMinDate"
+    [maxDate]="validationMaxDate" [minTime]="validationMinTime" [maxTime]="validationMaxTime" [config]="config" theme="dp-material">
+  </dp-time-select>
+</div>
+
+<dp-time-select theme="dp-material" [(ngModel)]="selectedDate" [config] = "config"> </dp-time-select>

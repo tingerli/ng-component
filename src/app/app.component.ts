@@ -31,6 +31,11 @@ const sideBarSetting:Setting[] = [
     path:'/charts',
     iconClass:'menu-icon fa fa-bar-chart-o',
     text:'图表'
+  },
+  {
+    path:'/datepicker',
+    iconClass:'menu-icon fa fa-bar-chart-o',
+    text:'日历'
   }
 ]
 

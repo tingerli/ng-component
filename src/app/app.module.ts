@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import {HomeComponent} from './home/home.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as $ from 'jquery';
+
 //router
 const routes:Routes = [
   {
@@ -41,6 +42,10 @@ const ansyncRoutes:Routes = [
   {
     path:'charts',
     loadChildren:'./charts-page/charts-page.module#ChartsPageModule',
+  },
+  {
+    path:'datepicker',
+    loadChildren:'./date-picker-page/date-picker-page.module#DatePickerPageModule',
   }
 ]
 
@@ -56,7 +61,7 @@ const ansyncRoutes:Routes = [
   ],
   declarations: [
     AppComponent,
-    HomeComponent,
+    HomeComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
