@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
   selector: 'ace-date-picker',
@@ -7,8 +7,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AceDatePickerComponent implements OnInit {
-  
-  constructor() { }
+
+  constructor() {
+
+  }
   selectedDate;
   config = {
     firstDayOfWeek: 'su',
@@ -25,6 +27,7 @@ export class AceDatePickerComponent implements OnInit {
     showNearMonthDays: true,
     showWeekNumbers: false,
     enableMonthSelector: true,
+    format: "YYYY-MM-DD HH:mm",
     yearFormat: 'YYYY',
     showGoToCurrent: true,
     dayBtnFormat: 'DD',
@@ -37,16 +40,23 @@ export class AceDatePickerComponent implements OnInit {
     secondsFormat: 'ss',
     secondsInterval: 1,
     showSeconds: false,
-    showTwentyFourHours: false,
+    showTwentyFourHours: true,
     timeSeparator: ':',
     multipleYearsNavigateBy: 10,
     showMultipleYearsNavigation: false,
-    locale: 'en'
+    locale: 'zh-cn',
+    // min:'2017-08-29 15:50',
+    // minTime:'2017-08-29 15:50'
   };
-  
+
   ngOnInit() {
+    setTimeout(function () {
+      $('.dp-input-container').append('<i class="fa fa-calendar" aria-hidden="true"></i>')
+    })
   }
-  log(e){
-    console.log(e);
+  validatorsChanged() {
+    $('.dp-current-location-btn').remove();
+    
+
   }
 }
